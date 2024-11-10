@@ -1,33 +1,32 @@
 package az.edu.turing.domain.entity;
 
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
 public class FlightEntity {
 
-    private String id;
+    private final String id;
     private String departurePoint;
     private String destinationPoint;
+    private int flightNumber;
     private LocalDateTime departureTime;
     private int totalSeats;
     private int availableSeats;
 
-    public FlightEntity(String destinationPoint, LocalDateTime departureTime, int totalSeats) {
+    public FlightEntity(String destinationPoint, int flightNumber, int totalSeats, LocalDateTime departureTime) {
         this.id = UUID.randomUUID().toString().substring(0, 8);
         this.departurePoint = "Kiev";
         this.destinationPoint = destinationPoint;
-        this.departureTime = departureTime;
+        this.flightNumber = flightNumber;
         this.totalSeats = totalSeats;
+        this.departureTime = departureTime;
         this.availableSeats = totalSeats;
     }
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getDeparturePoint() {
@@ -44,6 +43,14 @@ public class FlightEntity {
 
     public void setDestinationPoint(String destinationPoint) {
         this.destinationPoint = destinationPoint;
+    }
+
+    public int getFlightNumber() {
+        return flightNumber;
+    }
+
+    public void setFlightNumber(int flightNumber) {
+        this.flightNumber = flightNumber;
     }
 
     public LocalDateTime getDepartureTime() {
@@ -75,7 +82,7 @@ public class FlightEntity {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         FlightEntity that = (FlightEntity) object;
-        return totalSeats == that.totalSeats && Objects.equals(id, that.id) && Objects.equals(departurePoint, that.departurePoint) && Objects.equals(destinationPoint, that.destinationPoint) && Objects.equals(departureTime, that.departureTime);
+        return Objects.equals(id, that.id) && Objects.equals(departurePoint, that.departurePoint) && Objects.equals(destinationPoint, that.destinationPoint) && Objects.equals(departureTime, that.departureTime);
     }
 
     @Override
@@ -85,13 +92,9 @@ public class FlightEntity {
 
     @Override
     public String toString() {
-        return "FlightEntity{" +
-                "id='" + id + '\'' +
-                ", departurePoint='" + departurePoint + '\'' +
-                ", destinationPoint='" + destinationPoint + '\'' +
-                ", departureTime=" + departureTime +
-                ", totalSeats=" + totalSeats +
-                ", availableSeats=" + availableSeats +
-                '}';
+        return String.format(
+                "FlightEntity{id='%s', departurePoint='%s', destinationPoint='%s', departureTime=%s, totalSeats=%d, availableSeats=%d}",
+                id, departurePoint, destinationPoint, departureTime, totalSeats, availableSeats
+        );
     }
 }

@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class BookingEntity {
 
-    private String id;
+    private final String id;
     private FlightEntity flight;
     private final List<PassengerEntity> passengers;
     private boolean isActive;
@@ -21,10 +21,6 @@ public class BookingEntity {
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public FlightEntity getFlight() {
@@ -61,12 +57,7 @@ public class BookingEntity {
     }
 
     @Override
-    public String toString() {
-        return "BookingEntity{" +
-                "id='" + id + '\'' +
-                ", flight=" + flight +
-                ", passengers=" + passengers +
-                ", isActive=" + isActive +
-                '}';
+    public String toString(){
+        return String.format("BookingEntity{id='%s', flightNumber=%d, passengers=%d, isActive=%b}", id, flight.getFlightNumber(), passengers.size(), isActive);
     }
 }
