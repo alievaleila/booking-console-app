@@ -7,15 +7,9 @@ import az.edu.turing.domain.entity.PassengerEntity;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+
+public class BookingManagementApp {
+    public static void main(String[] args) {
         System.out.println(UUID.randomUUID().toString().substring(0, 8));
 
         //Checking Entities toString methods
