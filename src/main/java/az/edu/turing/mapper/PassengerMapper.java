@@ -7,6 +7,7 @@ public class PassengerMapper implements EntityMapper<PassengerEntity, PassengerR
     @Override
     public PassengerEntity toEntity(PassengerRequestDto passengerRequestDto) {
         return new PassengerEntity(
+                passengerRequestDto.getId(),
                 passengerRequestDto.getName(),
                 passengerRequestDto.getSurname()
         );

@@ -14,6 +14,12 @@ public class PassengerRequestDto {
         this.surname = surname;
     }
 
+    public PassengerRequestDto(String id, String name, String surname) {
+        this.id = UUID.randomUUID().toString().substring(0, 8);
+        this.name = name;
+        this.surname = surname;
+    }
+
     public String getId() {
         return id;
     }
