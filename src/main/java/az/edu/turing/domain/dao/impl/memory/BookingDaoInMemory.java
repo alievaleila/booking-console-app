@@ -6,9 +6,9 @@ import az.edu.turing.domain.entity.BookingEntity;
 import java.util.Collection;
 import java.util.Optional;
 
-public class BookingDaoInmemory extends BookingDao {
+public class BookingDaoInMemory extends BookingDao {
     @Override
-    public BookingEntity create(BookingEntity bookingEntity) {
+    public BookingEntity save(BookingEntity bookingEntity) {
         return null;
     }
 
