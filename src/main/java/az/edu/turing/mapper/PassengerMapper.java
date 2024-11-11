@@ -1,7 +1,7 @@
 package az.edu.turing.mapper;
 
 import az.edu.turing.domain.entity.PassengerEntity;
-import az.edu.turing.model.dto.PassengerRequestDto;
+import az.edu.turing.model.dto.request.PassengerRequestDto;
 
 public class PassengerMapper implements EntityMapper<PassengerEntity, PassengerRequestDto>{
     @Override

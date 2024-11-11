@@ -1,6 +1,4 @@
-package az.edu.turing.model.dto;
-
-import java.util.UUID;
+package az.edu.turing.model.dto.response;
 
 public class PassengerResponseDto {
     private String name;

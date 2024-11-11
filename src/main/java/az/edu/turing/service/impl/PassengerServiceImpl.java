@@ -4,8 +4,8 @@ import az.edu.turing.domain.dao.inter.PassengerDao;
 import az.edu.turing.domain.entity.PassengerEntity;
 import az.edu.turing.exception.AlreadyExistsException;
 import az.edu.turing.mapper.PassengerMapper;
-import az.edu.turing.model.dto.PassengerRequestDto;
-import az.edu.turing.model.dto.PassengerResponseDto;
+import az.edu.turing.model.dto.request.PassengerRequestDto;
+import az.edu.turing.model.dto.response.PassengerResponseDto;
 import az.edu.turing.service.PassengerService;
 
 public class PassengerServiceImpl implements PassengerService {
@@ -20,8 +20,7 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Override
     public PassengerResponseDto createPassenger(PassengerRequestDto passengerRequestDto) {
-        final String id = passengerRequestDto.getId();
-        if (passengerDao.existsById(id)){
+        if (passengerDao.existsById(passengerRequestDto.getId())){
             throw new AlreadyExistsException("Passenger already exists");
         }
 

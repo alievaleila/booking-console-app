@@ -1,4 +1,4 @@
-package az.edu.turing.model.dto;
+package az.edu.turing.model.dto.request;
 
 import java.util.UUID;
 
