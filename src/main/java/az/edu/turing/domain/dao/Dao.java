@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface Dao<E, T> {
+
     E create(E e);
 
     Collection<E> getAll();
