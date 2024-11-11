@@ -26,6 +26,6 @@ public class PassengerServiceImpl implements PassengerService {
         }
 
         PassengerEntity savedEntity = passengerDao.save(passengerMapper.toEntity(passengerRequestDto));
-        return new PassengerResponseDto(savedEntity.getId(), savedEntity.getName());
+        return new PassengerResponseDto(savedEntity.getName(), savedEntity.getSurname());
     }
 }
