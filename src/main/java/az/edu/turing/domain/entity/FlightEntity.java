@@ -16,7 +16,7 @@ public class FlightEntity {
     private int availableSeats;
 
     public FlightEntity(String destinationPoint, int flightNumber, int totalSeats, LocalDateTime departureTime) {
-        this.id = UUID.randomUUID().toString().substring(0, 8);
+        this.id = UUID.randomUUID().toString();
         this.departurePoint = "Kiev";
         this.destinationPoint = destinationPoint;
         this.flightNumber = flightNumber;

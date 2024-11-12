@@ -13,7 +13,7 @@ public class BookingEntity {
     private boolean isActive;
 
     public BookingEntity(FlightEntity flight) {
-        this.id = UUID.randomUUID().toString().substring(0, 8);
+        this.id = UUID.randomUUID().toString();
         this.flight = flight;
         this.passengers = new ArrayList<>();
         this.isActive = true;
