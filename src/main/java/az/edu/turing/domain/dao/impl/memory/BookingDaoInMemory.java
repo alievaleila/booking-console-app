@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 public class BookingDaoInMemory extends BookingDao {
+
     @Override
     public BookingEntity save(BookingEntity bookingEntity) {
         return null;
