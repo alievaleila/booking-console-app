@@ -6,9 +6,9 @@ import az.edu.turing.domain.entity.FlightEntity;
 import java.util.Collection;
 import java.util.Optional;
 
-public class FlightDaoInmemory extends FlightDao {
+public class FlightDaoInMemory extends FlightDao {
     @Override
-    public FlightEntity create(FlightEntity flightEntity) {
+    public FlightEntity save(FlightEntity flightEntity) {
         return null;
     }
 
