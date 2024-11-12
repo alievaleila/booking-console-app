@@ -1,9 +1,10 @@
 package az.edu.turing.domain.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-public class PassengerEntity {
+public class PassengerEntity implements Serializable {
 
     private final String id;
     private String name;
