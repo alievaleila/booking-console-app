@@ -13,16 +13,16 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-public class PassengerInDatabasePostgreSql extends PassengerDao {
+public class PassengerDaoPostgres extends PassengerDao {
 
     private final ConnectionHelper connectionHelper;
 
-    public PassengerInDatabasePostgreSql(ConnectionHelper connectionHelper) {
+    public PassengerDaoPostgres(ConnectionHelper connectionHelper) {
         this.connectionHelper = connectionHelper;
     }
 
     @Override
-    public PassengerEntity save(PassengerEntity passengerEntity) {
+    public PassengerEntity create(PassengerEntity passengerEntity) {
         try (Connection connection = connectionHelper.getConnection()) {
             PreparedStatement preparedStatement = connection
                     .prepareStatement("insert into passenger(id,passengerName,passengerSurname) values(?,?,?);");

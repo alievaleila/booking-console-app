@@ -20,7 +20,7 @@ public class PassengerInFile extends PassengerDao {
     }
 
     @Override
-    public PassengerEntity save(PassengerEntity passengerEntity) {
+    public PassengerEntity create(PassengerEntity passengerEntity) {
         List<PassengerEntity> passengerEntityList = fileUtil.readObjectFromFile();
         passengerEntityList.add(passengerEntity);
         fileUtil.writeObjectToFile(passengerEntityList);

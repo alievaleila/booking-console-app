@@ -17,7 +17,7 @@ public class PassengerEntity implements Serializable {
     }
 
     public PassengerEntity(String id, String name, String surname) {
-        this.id = UUID.randomUUID().toString();
+        this.id = id;
         this.name = name;
         this.surname = surname;
     }

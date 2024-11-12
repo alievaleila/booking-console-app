@@ -7,13 +7,18 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 
 public class FlightDaoInmemory extends FlightDao {
-    private final Map<UUID, FlightEntity> flights = new HashMap<>();
+    private final Map<String, FlightEntity> flights = new HashMap<>();
 
     @Override
-    public FlightEntity create(FlightEntity flight) {
+    public FlightEntity create(FlightEntity flightEntity) {
+        flights.put(flightEntity.getId(), flightEntity);
+        return flightEntity;
+    }
+
+    @Override
+    public FlightEntity save(FlightEntity flight) {
         flights.put(flight.getId(), flight);
         return flight;
     }

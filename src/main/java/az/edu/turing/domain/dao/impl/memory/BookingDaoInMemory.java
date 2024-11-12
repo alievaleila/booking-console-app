@@ -9,7 +9,7 @@ import java.util.Optional;
 public class BookingDaoInMemory extends BookingDao {
 
     @Override
-    public BookingEntity save(BookingEntity bookingEntity) {
+    public BookingEntity create(BookingEntity bookingEntity) {
         return null;
     }
 
