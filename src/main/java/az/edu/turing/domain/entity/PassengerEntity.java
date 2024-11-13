@@ -10,6 +10,10 @@ public class PassengerEntity implements Serializable {
     private String name;
     private String surname;
 
+    public PassengerEntity(String id) {
+        this.id = id;
+    }
+
     public PassengerEntity(String name, String surname) {
         this.id = UUID.randomUUID().toString();
         this.name = name;

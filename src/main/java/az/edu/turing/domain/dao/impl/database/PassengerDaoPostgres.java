@@ -8,10 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class PassengerDaoPostgres extends PassengerDao {
 
@@ -56,7 +53,7 @@ public class PassengerDaoPostgres extends PassengerDao {
     public Optional<PassengerEntity> getById(String passengerId) {
         Optional<PassengerEntity> passengerEntity = Optional.empty();
         try (Connection connection = connectionHelper.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from  where passengerId=" + passengerId);
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from passenger where passengerId=" + passengerId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
 
@@ -109,6 +106,26 @@ public class PassengerDaoPostgres extends PassengerDao {
     public boolean existsById(String passengerId) {
         Optional<PassengerEntity> passengerEntity = getById(passengerId);
         return passengerEntity.isPresent();
+    }
+
+    @Override
+    public List<PassengerEntity> getPassengersByBookingId(UUID bookingId) {
+        List<PassengerEntity> passengers = new ArrayList<>();
+        String query = "SELECT * FROM passengers WHERE booking_id = ?";
+        try (Connection connection = connectionHelper.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setObject(1, bookingId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String passengerId = rs.getString("id");
+                PassengerEntity passenger = new PassengerEntity(passengerId);
+                passengers.add(passenger);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return passengers;
     }
 
     public PassengerEntity getPassenger(ResultSet resultSet) throws SQLException {
