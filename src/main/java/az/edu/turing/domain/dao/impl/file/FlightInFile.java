@@ -67,6 +67,7 @@ public class FlightInFile extends FlightDao {
                 entity.setAvailableSeats(inputUtil.getInteger("Enter the available seats"));
                 entity.setDestinationPoint(inputUtil.getString("Enter the new Destination Point"));
                 entity.setTotalSeats(inputUtil.getInteger("Enter the total seats"));
+                entity.setDepartureTime(inputUtil.getLocalDateTime("Enter the new departure time"));
             }
         }
         fileUtil.writeObjectToFile(flightEntityList);
