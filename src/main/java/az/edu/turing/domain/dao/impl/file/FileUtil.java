@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileUtil<T> {
-    private final  String fileName;
+    private final String fileName;
 
     public FileUtil(String fileName) {
         this.fileName = fileName;
@@ -21,6 +21,10 @@ public class FileUtil<T> {
 
     public List<T> readObjectFromFile() {
         List<T> entityList = new ArrayList<>();
+        File file = new File(fileName);
+        if (!file.exists()) {
+            return entityList;
+        }
         try (ObjectInputStream fileInputStream = new ObjectInputStream(new FileInputStream(fileName))) {
             entityList = (List<T>) fileInputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {

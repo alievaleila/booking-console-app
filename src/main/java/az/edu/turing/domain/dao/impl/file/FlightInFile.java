@@ -1,6 +1,5 @@
 package az.edu.turing.domain.dao.impl.file;
 
-import az.edu.turing.domain.dao.impl.file.FileUtil;
 import az.edu.turing.domain.dao.inter.FlightDao;
 import az.edu.turing.domain.entity.FlightEntity;
 import az.edu.turing.util.InputUtil;
@@ -11,10 +10,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class FlightInFile extends FlightDao {
-    private final FileUtil fileUtil;
+    private final FileUtil<FlightEntity> fileUtil;
     private final InputUtil inputUtil;
 
-    public FlightInFile(FileUtil fileUtil, InputUtil inputUtil) {
+    public FlightInFile(FileUtil<FlightEntity> fileUtil, InputUtil inputUtil) {
         this.fileUtil = fileUtil;
         this.inputUtil = inputUtil;
     }

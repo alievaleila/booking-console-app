@@ -10,11 +10,11 @@ import java.util.Optional;
 
 public class PassengerInFile extends PassengerDao {
 
-    private final FileUtil fileUtil;
+    private final FileUtil<PassengerEntity> fileUtil;
     private final InputUtil inputUtil;
 
 
-    public PassengerInFile(FileUtil fileUtil, InputUtil inputUtil) {
+    public PassengerInFile(FileUtil<PassengerEntity> fileUtil, InputUtil inputUtil) {
         this.fileUtil = fileUtil;
         this.inputUtil = inputUtil;
     }
