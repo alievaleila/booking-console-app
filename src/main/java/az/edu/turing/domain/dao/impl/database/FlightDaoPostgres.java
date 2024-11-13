@@ -21,18 +21,19 @@ public class FlightDaoPostgres extends FlightDao {
 
     public FlightDaoPostgres(ConnectionHelper connectionHelper) {
         this.connectionHelper = connectionHelper;
-        String createTableQuery = "CREATE TABLE IF NOT EXISTS flights (" +
-                "id UUID PRIMARY KEY," +
-                "departure_point VARCHAR(255) NOT NULL," +
-                "destination_point VARCHAR(255) NOT NULL," +
-                "flight_number int NOT NULL UNIQUE," +
-                "departure_time TIMESTAMP(3) NOT NULL," +
-                "total_seats int NOT NULL," +
-                "available_seats int NOT NULL);";
-
+        String createTableQuery =
+                "CREATE TABLE IF NOT EXISTS Flights(" +
+                        "flight_id UUID PRIMARY KEY," +
+                        "flight_departurepoint VARCHAR(255) NOT NULL," +
+                        "flight_destinationpoint VARCHAR(255) NOT NULL," +
+                        "flight_number int NOT NULL UNIQUE," +
+                        "flight_departuretime TIMESTAMP(3) NOT NULL," +
+                        "flight_totalseats int NOT NULL," +
+                        "flight_availableseats int NOT NULL);";
         try (Connection connection = connectionHelper.getConnection();
              PreparedStatement ps = connection.prepareStatement(createTableQuery)) {
-            ps.executeUpdate();
+            int i = ps.executeUpdate();
+            System.out.println(i + " Flight table created!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -40,7 +41,9 @@ public class FlightDaoPostgres extends FlightDao {
 
     @Override
     public FlightEntity create(FlightEntity flightEntity) {
-        String query = "INSERT INTO flights VALUES(?, ?, ?, ?, ?, ?, ?) RETURNING *";
+        String query = "INSERT INTO Flights(flight_id, flight_departurepoint, flight_destinationpoint, " +
+                "flight_number, flight_departuretime, flight_totalseats, flight_availableseats) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?) RETURNING *";
         try (Connection connection = connectionHelper.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setObject(1, flightEntity.getId());
@@ -65,7 +68,7 @@ public class FlightDaoPostgres extends FlightDao {
     @Override
     public Collection<FlightEntity> getAll() {
         List<FlightEntity> flights = new ArrayList<>();
-        String query = "SELECT * FROM flights";
+        String query = "SELECT * FROM Flights";
         try (Connection connection = connectionHelper.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
@@ -82,9 +85,10 @@ public class FlightDaoPostgres extends FlightDao {
 
     @Override
     public Optional<FlightEntity> getById(UUID id) {
-        String query = "SELECT * FROM flights WHERE id = ?";
+        String query = "SELECT * FROM Flights WHERE flight_id = ?";
         try (Connection connection = connectionHelper.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setObject(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return Optional.of(mapResultSetToFlightEntity(rs));
@@ -98,7 +102,7 @@ public class FlightDaoPostgres extends FlightDao {
 
     @Override
     public FlightEntity deleteById(UUID id) {
-        String query = "DELETE FROM flights WHERE id = ? RETURNING *";
+        String query = "DELETE FROM Flights WHERE flight_id = ? RETURNING *";
         try (Connection connection = connectionHelper.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setObject(1, id);
@@ -115,9 +119,9 @@ public class FlightDaoPostgres extends FlightDao {
 
     @Override
     public FlightEntity update(FlightEntity flightEntity) {
-        String query = "UPDATE flights " +
-                "SET departure_point = ?, destination_point = ?, flight_number = ?, " +
-                "departure_time = ?, total_seats = ?, available_seats = ? WHERE id = ? RETURNING *";
+        String query = "UPDATE Flights " +
+                "SET flight_departurepoint = ?, flight_destinationpoint = ?, flight_number = ?, " +
+                "flight_departuretime = ?, flight_totalseats = ?, flight_availableseats = ? WHERE flight_id = ? RETURNING *";
 
         try (Connection connection = connectionHelper.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
@@ -143,17 +147,19 @@ public class FlightDaoPostgres extends FlightDao {
 
     private FlightEntity mapResultSetToFlightEntity(ResultSet rs) throws SQLException {
         FlightEntity flightEntity = new FlightEntity();
-        flightEntity.setId(rs.getObject("id", UUID.class));
-        flightEntity.setDeparturePoint(rs.getString("departure_point"));
-        flightEntity.setDestinationPoint(rs.getString("destination_point"));
+        flightEntity.setId(rs.getObject("flight_id", UUID.class));
+        flightEntity.setDeparturePoint(rs.getString("flight_departurepoint"));
+        flightEntity.setDestinationPoint(rs.getString("flight_destinationpoint"));
         flightEntity.setFlightNumber(rs.getInt("flight_number"));
-        flightEntity.setTotalSeats(rs.getInt("total_seats"));
-        flightEntity.setAvailableSeats(rs.getInt("available_seats"));
+        flightEntity.setTotalSeats(rs.getInt("flight_totalseats"));
+        flightEntity.setAvailableSeats(rs.getInt("flight_availableseats"));
         return flightEntity;
     }
 
     @Override
     public boolean existsById(String id) {
-        return false;
+        Optional<FlightEntity> flightEntity = getById(UUID.fromString(String.valueOf(id)));
+        return flightEntity.isPresent();
     }
 }
+
