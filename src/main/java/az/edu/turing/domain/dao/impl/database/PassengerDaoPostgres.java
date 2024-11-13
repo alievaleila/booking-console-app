@@ -53,7 +53,7 @@ public class PassengerDaoPostgres extends PassengerDao {
     public Optional<PassengerEntity> getById(String passengerId) {
         Optional<PassengerEntity> passengerEntity = Optional.empty();
         try (Connection connection = connectionHelper.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from passenger where passengerId=" + passengerId);
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from  where passengerId=" + passengerId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
 
