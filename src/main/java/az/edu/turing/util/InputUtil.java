@@ -1,5 +1,8 @@
 package az.edu.turing.util;
 
+import az.edu.turing.domain.entity.FlightEntity;
+
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class InputUtil {
@@ -14,5 +17,25 @@ public class InputUtil {
         Scanner sc = new Scanner(System.in);
         System.out.println(title + ":");
         return sc.nextInt();
+    }
+
+    public Boolean getBoolean(Boolean title) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println(title + ":");
+        return sc.nextBoolean();
+    }
+
+    public FlightEntity getFlightEntity(String title) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println(title + ":");
+
+        return null;
+    }
+
+    public LocalDateTime getLocalDateTime(String title) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println(title + ":");
+
+        return null;
     }
 }
