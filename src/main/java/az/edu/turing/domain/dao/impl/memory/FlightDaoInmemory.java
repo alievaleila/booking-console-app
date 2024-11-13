@@ -24,12 +24,12 @@ public class FlightDaoInmemory extends FlightDao {
     }
 
     @Override
-    public Optional<FlightEntity> getById(String id) {
+    public Optional<FlightEntity> getById(UUID id) {
         return Optional.ofNullable(flights.get(id));
     }
 
     @Override
-    public FlightEntity deleteById(String id) {
+    public FlightEntity deleteById(UUID id) {
         return flights.remove(id);
     }
 
