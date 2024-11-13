@@ -20,7 +20,7 @@ public class BookingDaoInMemory extends BookingDao {
         if (isBookingExists && isInsufficientSeats)
             throw new AlreadyExistsException("This booking already exists or there are insufficient seats available.");
         bookingEntity.getFlight().setAvailableSeats(bookingEntity.getFlight().getAvailableSeats() - bookingEntity.getPassengers().size());
-        return BOOKINGS.put(bookingEntity.getId(), bookingEntity);
+        return BOOKINGS.put(bookingEntity.getId().toString(), bookingEntity);
     }
 
     @Override
@@ -41,8 +41,8 @@ public class BookingDaoInMemory extends BookingDao {
     @Override
     public BookingEntity update(BookingEntity bookingEntity) {
         if(bookingEntity == null) throw new NullPointerException();
-        if(!existsById(bookingEntity.getId())) throw new BookingNotFoundException("There is no booking with this id: " + bookingEntity.getId());
-        return BOOKINGS.put(bookingEntity.getId(), bookingEntity);
+        if(!existsById(bookingEntity.getId().toString())) throw new BookingNotFoundException("There is no booking with this id: " + bookingEntity.getId());
+        return BOOKINGS.put(bookingEntity.getId().toString(), bookingEntity);
     }
 
     @Override

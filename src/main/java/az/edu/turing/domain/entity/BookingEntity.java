@@ -26,8 +26,8 @@ public class BookingEntity {
         this.isActive = true;
     }
 
-    public String getId() {
-        return id.toString();
+    public UUID getId() {
+        return id;
     }
 
     public FlightEntity getFlight() {
