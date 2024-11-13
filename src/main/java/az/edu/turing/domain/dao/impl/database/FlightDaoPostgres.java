@@ -151,4 +151,9 @@ public class FlightDaoPostgres extends FlightDao {
         flightEntity.setAvailableSeats(rs.getInt("available_seats"));
         return flightEntity;
     }
+
+    @Override
+    public boolean existsById(String id) {
+        return false;
+    }
 }
