@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class FlightEntity {
 
-    private final String id;
+    private UUID id;
     private String departurePoint;
     private String destinationPoint;
     private int flightNumber;
@@ -15,8 +15,11 @@ public class FlightEntity {
     private int totalSeats;
     private int availableSeats;
 
+    public FlightEntity() {
+    }
+
     public FlightEntity(String destinationPoint, int flightNumber, int totalSeats, LocalDateTime departureTime) {
-        this.id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID();
         this.departurePoint = "Kiev";
         this.destinationPoint = destinationPoint;
         this.flightNumber = flightNumber;
@@ -25,8 +28,13 @@ public class FlightEntity {
         this.availableSeats = totalSeats;
     }
 
-    public String getId() {
+
+    public UUID getId() {
         return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getDeparturePoint() {

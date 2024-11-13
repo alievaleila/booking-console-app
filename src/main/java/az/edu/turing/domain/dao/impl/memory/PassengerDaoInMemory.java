@@ -13,7 +13,7 @@ public class PassengerDaoInMemory extends PassengerDao {
     public static final List<PassengerEntity> PASSENGERS = new ArrayList<>();
 
     @Override
-    public PassengerEntity save(PassengerEntity passengerEntity) {
+    public PassengerEntity create(PassengerEntity passengerEntity) {
         PASSENGERS.add(passengerEntity);
         return passengerEntity;
     }

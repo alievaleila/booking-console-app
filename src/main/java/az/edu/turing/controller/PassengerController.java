@@ -11,7 +11,7 @@ public class PassengerController {
         this.passengerService = passengerService;
     }
 
-    public PassengerResponseDto createPassenger(PassengerRequestDto passengerRequestDto) {
+    public PassengerResponseDto create(PassengerRequestDto passengerRequestDto) {
         return passengerService.createPassenger(passengerRequestDto);
     }
 }

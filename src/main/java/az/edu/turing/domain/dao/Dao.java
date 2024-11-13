@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public interface Dao<E, T> {
 
-    E save(E e);
+    E create(E e);
 
     Collection<E> getAll();
 
