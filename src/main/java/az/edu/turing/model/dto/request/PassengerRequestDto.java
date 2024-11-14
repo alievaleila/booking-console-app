@@ -9,13 +9,13 @@ public class PassengerRequestDto {
     private String surname;
 
     public PassengerRequestDto(String name, String surname) {
-        this.id = UUID.randomUUID().toString().substring(0, 8);
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.surname = surname;
     }
 
     public PassengerRequestDto(String id, String name, String surname) {
-        this.id = UUID.randomUUID().toString().substring(0, 8);
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.surname = surname;
     }
