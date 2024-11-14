@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 public class FlightResponseDto {
 
 
+
+
+
     private String destinationPoint;
     private int flightNumber;
     private LocalDateTime departureTime;

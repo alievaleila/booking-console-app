@@ -1,10 +1,7 @@
 package az.edu.turing;
 
-import az.edu.turing.config.ConnectionHelper;
-import az.edu.turing.domain.dao.impl.database.FlightDaoPostgres;
-import az.edu.turing.domain.entity.FlightEntity;
-
-import java.time.LocalDateTime;
+import az.edu.turing.controller.FlightController;
+import az.edu.turing.menu.Menu;
 
 
 public class BookingManagementApp {
@@ -17,8 +14,10 @@ public class BookingManagementApp {
 //        System.out.println(flightEntity);
 //        System.out.println(bookingEntity);
 
-        FlightEntity flightEntity = new FlightEntity("Europa", 1234, 55, LocalDateTime.now());
-        FlightDaoPostgres flightDaoPostgres = new FlightDaoPostgres(new ConnectionHelper());
-        flightDaoPostgres.create(flightEntity);
+//        FlightEntity flightEntity = new FlightEntity("Europa", 1234, 55, LocalDateTime.now());
+//        FlightDaoPostgres flightDaoPostgres = new FlightDaoPostgres(new ConnectionHelper());
+//        flightDaoPostgres.create(flightEntity);
+        FlightController flightController = new FlightController();
+        Menu menu = new Menu(flightController);
     }
 }
