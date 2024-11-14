@@ -7,6 +7,7 @@ import az.edu.turing.util.InputUtil;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class PassengerInFile extends PassengerDao {
 
@@ -73,6 +74,11 @@ public class PassengerInFile extends PassengerDao {
     public boolean existsById(String passengerId) {
         List<PassengerEntity> entityList = fileUtil.readObjectFromFile();
         return entityList.stream().anyMatch(passengerEntity -> passengerEntity.getId().equals(passengerId));
+    }
+
+    @Override
+    public List<PassengerEntity> getPassengersByBookingId(UUID bookingId) {
+        return List.of();
     }
 
 }

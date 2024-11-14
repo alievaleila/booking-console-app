@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class PassengerDaoInMemory extends PassengerDao {
 
@@ -44,5 +45,10 @@ public class PassengerDaoInMemory extends PassengerDao {
     public boolean existsById(String id) {
         return PASSENGERS.stream()
                 .anyMatch(passengerEntity -> passengerEntity.getId().equals(id));
+    }
+
+    @Override
+    public List<PassengerEntity> getPassengersByBookingId(UUID bookingId) {
+        return List.of();
     }
 }
