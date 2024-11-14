@@ -68,6 +68,7 @@ public class PassengerDaoPostgres extends PassengerDao {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Passengers WHERE passenger_id = ?;");
             preparedStatement.setString(1, passengerId);
             ResultSet resultSet = preparedStatement.executeQuery();
+
             while (resultSet.next()) {
                 passengerEntity = Optional.of(getPassenger(resultSet));
             }
