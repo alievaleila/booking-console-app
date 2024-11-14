@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class FlightDaoInMemory extends FlightDao {
+
     private final Map<UUID, FlightEntity> flights = new HashMap<>();
 
     @Override
@@ -41,8 +42,13 @@ public class FlightDaoInMemory extends FlightDao {
     }
 
     @Override
-    public boolean existsById(String flightId) {
+    public boolean existsById(UUID flightId) {
         return flights.containsKey(flightId);
+    }
+
+    @Override
+    public Optional<FlightEntity> getByFlightNumber(int flightNumber) {
+        return flights.values().stream().filter(e -> e.getFlightNumber() == flightNumber).findFirst();
     }
 }
 

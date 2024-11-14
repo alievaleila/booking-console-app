@@ -5,6 +5,7 @@ import az.edu.turing.domain.dao.inter.FlightDao;
 import az.edu.turing.domain.entity.FlightEntity;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -145,6 +146,28 @@ public class FlightDaoPostgres extends FlightDao {
         return null;
     }
 
+    @Override
+    public boolean existsById(UUID id) {
+        Optional<FlightEntity> flightEntity = getById(UUID.fromString(String.valueOf(id)));
+        return flightEntity.isPresent();
+    }
+
+    @Override
+    public Optional<FlightEntity> getByFlightNumber(int flightNumber) {
+        String query = "SELECT * FROM Flights WHERE flight_number = ?";
+        try (Connection connection = connectionHelper.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, flightNumber);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return Optional.of(mapResultSetToFlightEntity(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
+
     private FlightEntity mapResultSetToFlightEntity(ResultSet rs) throws SQLException {
         FlightEntity flightEntity = new FlightEntity();
         flightEntity.setId(rs.getObject("flight_id", UUID.class));
@@ -154,12 +177,6 @@ public class FlightDaoPostgres extends FlightDao {
         flightEntity.setTotalSeats(rs.getInt("flight_totalseats"));
         flightEntity.setAvailableSeats(rs.getInt("flight_availableseats"));
         return flightEntity;
-    }
-
-    @Override
-    public boolean existsById(String id) {
-        Optional<FlightEntity> flightEntity = getById(UUID.fromString(String.valueOf(id)));
-        return flightEntity.isPresent();
     }
 }
 

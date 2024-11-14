@@ -17,7 +17,7 @@ public class BookingManagementApp {
 //        FlightEntity flightEntity = new FlightEntity("Europa", 1234, 55, LocalDateTime.now());
 //        FlightDaoPostgres flightDaoPostgres = new FlightDaoPostgres(new ConnectionHelper());
 //        flightDaoPostgres.create(flightEntity);
-        FlightController flightController = new FlightController();
-        Menu menu = new Menu(flightController);
+//        FlightController flightController = new FlightController();
+//        Menu menu = new Menu(flightController);
     }
 }

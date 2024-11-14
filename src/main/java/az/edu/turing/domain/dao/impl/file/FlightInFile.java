@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class FlightInFile extends FlightDao {
+
     private final FileUtil<FlightEntity> fileUtil;
     private final InputUtil inputUtil;
 
@@ -17,7 +18,6 @@ public class FlightInFile extends FlightDao {
         this.fileUtil = fileUtil;
         this.inputUtil = inputUtil;
     }
-
 
     @Override
     public FlightEntity create(FlightEntity flightEntity) {
@@ -75,8 +75,19 @@ public class FlightInFile extends FlightDao {
     }
 
     @Override
-    public boolean existsById(String flightId) {
+    public boolean existsById(UUID flightId) {
         List<FlightEntity> entityList = fileUtil.readObjectFromFile();
         return entityList.stream().anyMatch(flightEntity -> flightEntity.getId().equals(flightId));
+    }
+
+    @Override
+    public Optional<FlightEntity> getByFlightNumber(int flightNumber) {
+        List<FlightEntity> entityList = fileUtil.readObjectFromFile();
+        for (FlightEntity flightEntity : entityList) {
+            if (flightEntity.getFlightNumber() == flightNumber) {
+                return Optional.of(flightEntity);
+            }
+        }
+        return Optional.empty();
     }
 }

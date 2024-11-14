@@ -17,11 +17,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class BookingInDatabase extends BookingDao {
+public class BookingDaoPostgres extends BookingDao {
 
     private final ConnectionHelper connectionHelper;
 
-    public BookingInDatabase(ConnectionHelper connectionHelper) {
+    public BookingDaoPostgres(ConnectionHelper connectionHelper) {
         this.connectionHelper = connectionHelper;
         String createTableQuery = "CREATE TABLE IF NOT EXISTS bookings (" +
                 "id UUID PRIMARY KEY," +
