@@ -15,7 +15,11 @@ public class FlightEntity {
     private int totalSeats;
     private int availableSeats;
 
-    public FlightEntity() {
+    public FlightEntity(){
+    }
+
+    public FlightEntity(long id, String destinationPoint, String departurepoint, int flightNumber,
+                        LocalDateTime departureTime, int totalSeats, int availableSeats) {
     }
 
     public FlightEntity(UUID id) {
@@ -30,6 +34,17 @@ public class FlightEntity {
         this.totalSeats = totalSeats;
         this.departureTime = departureTime;
         this.availableSeats = totalSeats;
+    }
+
+    public FlightEntity(UUID id, String departurePoint, String destinationPoint,
+                        Integer flightNumber, LocalDateTime departureTime, Integer totalSeats, Integer availableSeats) {
+        this.id = id;
+        this.departurePoint = departurePoint;
+        this.destinationPoint = destinationPoint;
+        this.flightNumber = flightNumber;
+        this.departureTime = LocalDateTime.now();
+        this.totalSeats = totalSeats;
+        this.availableSeats = availableSeats;
     }
 
 
