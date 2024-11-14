@@ -18,6 +18,10 @@ public class FlightEntity {
     public FlightEntity() {
     }
 
+    public FlightEntity(UUID id) {
+        this.id = id;
+    }
+
     public FlightEntity(String destinationPoint, int flightNumber, int totalSeats, LocalDateTime departureTime) {
         this.id = UUID.randomUUID();
         this.departurePoint = "Kiev";

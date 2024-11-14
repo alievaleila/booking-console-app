@@ -7,10 +7,13 @@ import java.util.UUID;
 
 public class BookingEntity {
 
-    private final UUID id;
+    private UUID id;
     private FlightEntity flight;
-    private final List<PassengerEntity> passengers;
+    private List<PassengerEntity> passengers;
     private boolean isActive;
+
+    public BookingEntity() {
+    }
 
     public BookingEntity(FlightEntity flight, List<PassengerEntity> passengers, boolean isActive) {
         this.id = UUID.randomUUID();
@@ -26,8 +29,8 @@ public class BookingEntity {
         this.isActive = true;
     }
 
-    public UUID getId() {
-        return id;
+    public String getId() {
+        return id.toString();
     }
 
     public FlightEntity getFlight() {
