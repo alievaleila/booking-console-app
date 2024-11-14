@@ -1,4 +1,4 @@
-package az.edu.turing.service;
+package az.edu.turing.service.inter;
 
 import az.edu.turing.model.dto.request.PassengerRequestDto;
 import az.edu.turing.model.dto.response.PassengerResponseDto;

@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class FlightRequestDto {
 
-    private long id;
+    private UUID id;
     private String departurePoint;
     private String destinationPoint;
     private int flightNumber;
@@ -13,13 +13,13 @@ public class FlightRequestDto {
     private int totalSeats;
     private int availableSeats;
 
-    public FlightRequestDto(long id, String departurePoint, String destinationPoint, int flightNumber,
-                            String departureTime, int totalSeats, int availableSeats) {
+    public FlightRequestDto(UUID id, String departurePoint, String destinationPoint, int flightNumber,
+                            LocalDateTime departureTime, int totalSeats, int availableSeats) {
         this.id = id;
         this.departurePoint = departurePoint;
         this.destinationPoint = destinationPoint;
         this.flightNumber = flightNumber;
-        this.departureTime = LocalDateTime.now();
+        this.departureTime = departureTime;
         this.totalSeats = totalSeats;
         this.availableSeats = availableSeats;
     }
@@ -30,11 +30,11 @@ public class FlightRequestDto {
         this.destinationPoint = destinationPoint;
     }
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

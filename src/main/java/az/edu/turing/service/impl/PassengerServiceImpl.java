@@ -6,7 +6,7 @@ import az.edu.turing.exception.AlreadyExistsException;
 import az.edu.turing.mapper.PassengerMapper;
 import az.edu.turing.model.dto.request.PassengerRequestDto;
 import az.edu.turing.model.dto.response.PassengerResponseDto;
-import az.edu.turing.service.PassengerService;
+import az.edu.turing.service.inter.PassengerService;
 
 public class PassengerServiceImpl implements PassengerService {
 

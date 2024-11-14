@@ -22,9 +22,13 @@ public class FlightMapper implements EntityMapper<FlightEntity, FlightRequestDto
     @Override
     public FlightRequestDto toDto(FlightEntity flightEntity) {
         return new FlightRequestDto(
-                flightEntity.getDepartureTime(),
+                flightEntity.getId(),
+                flightEntity.getDeparturePoint(),
+                flightEntity.getDestinationPoint(),
                 flightEntity.getFlightNumber(),
-                flightEntity.getDestinationPoint()
+                flightEntity.getDepartureTime(),
+                flightEntity.getTotalSeats(),
+                flightEntity.getAvailableSeats()
         );
     }
 }
