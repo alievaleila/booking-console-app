@@ -12,6 +12,6 @@ public class FlightResponseDto {
     public FlightResponseDto(String destinationPoint, int flightNumber, LocalDateTime departureTime) {
         this.destinationPoint = destinationPoint;
         this.flightNumber = flightNumber;
-        this.departureTime = departureTime;
+        this.departureTime = LocalDateTime.now();
     }
 }
