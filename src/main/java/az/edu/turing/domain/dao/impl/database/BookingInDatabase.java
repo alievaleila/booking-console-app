@@ -3,6 +3,8 @@ package az.edu.turing.domain.dao.impl.database;
 import az.edu.turing.config.ConnectionHelper;
 import az.edu.turing.domain.dao.inter.BookingDao;
 import az.edu.turing.domain.entity.BookingEntity;
+import az.edu.turing.domain.entity.FlightEntity;
+import az.edu.turing.domain.entity.PassengerEntity;
 
 import java.sql.*;
 import java.util.*;
