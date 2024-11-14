@@ -3,9 +3,19 @@ package az.edu.turing.domain.dao.impl.database;
 import az.edu.turing.config.ConnectionHelper;
 import az.edu.turing.domain.dao.inter.BookingDao;
 import az.edu.turing.domain.entity.BookingEntity;
+import az.edu.turing.domain.entity.FlightEntity;
+import az.edu.turing.domain.entity.PassengerEntity;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class BookingInDatabase extends BookingDao {
 

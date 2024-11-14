@@ -33,6 +33,11 @@ public class BookingEntity {
         return id.toString();
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+
     public FlightEntity getFlight() {
         return flight;
     }
@@ -43,6 +48,10 @@ public class BookingEntity {
 
     public List<PassengerEntity> getPassengers() {
         return passengers;
+    }
+
+    public void setPassengers(List<PassengerEntity> passengers) {
+        this.passengers = passengers;
     }
 
     public boolean isActive() {
@@ -70,4 +79,5 @@ public class BookingEntity {
     public String toString() {
         return String.format("BookingEntity{id='%s', flightNumber=%d, passengers=%d, isActive=%b}", id.toString(), flight.getFlightNumber(), passengers.size(), isActive);
     }
+
 }
