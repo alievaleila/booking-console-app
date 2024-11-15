@@ -4,15 +4,12 @@ import az.edu.turing.domain.dao.Dao;
 import az.edu.turing.domain.entity.FlightEntity;
 
 import java.util.Optional;
-import java.util.UUID;
 
-public abstract class FlightDao implements Dao<FlightEntity, UUID> {
+public abstract class FlightDao implements Dao<FlightEntity, Long> {
 
-    public abstract boolean  existsById(UUID id);
+    public abstract boolean existsById(Long id);
 
-    public abstract Optional<FlightEntity> getByFlightNumber(int flightNumber);
-
-    public boolean bookSeats(UUID flightId, int seats){
+    public boolean bookSeats(Long flightId, int seats) {
         Optional<FlightEntity> flight = getById(flightId);
         if (flight.isEmpty() || flight.get().getAvailableSeats() < seats) {
             return false;

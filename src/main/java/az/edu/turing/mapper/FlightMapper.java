@@ -1,33 +1,24 @@
 package az.edu.turing.mapper;
 
 import az.edu.turing.domain.entity.FlightEntity;
-import az.edu.turing.model.dto.request.FlightRequestDto;
+import az.edu.turing.model.dto.request.FlightRequest;
+import az.edu.turing.model.dto.response.FlightResponse;
 
 
-public class FlightMapper implements EntityMapper<FlightEntity, FlightRequestDto> {
+public class FlightMapper implements EntityMapper<FlightEntity ,FlightResponse> {
 
     @Override
-    public FlightEntity toEntity(FlightRequestDto flightRequestDto) {
-        return new FlightEntity(
-                flightRequestDto.getId(),
-                flightRequestDto.getDeparturePoint(),
-                flightRequestDto.getDestinationPoint(),
-                flightRequestDto.getFlightNumber(),
-                flightRequestDto.getDepartureTime(),
-                flightRequestDto.getTotalSeats(),
-                flightRequestDto.getAvailableSeats()
-        );
+    public FlightEntity toEntity(FlightResponse flightResponse) {
+        return null;
     }
 
     @Override
-    public FlightRequestDto toDto(FlightEntity flightEntity) {
-        return new FlightRequestDto(
+    public FlightResponse toDto(FlightEntity flightEntity) {
+        return new FlightResponse(
                 flightEntity.getId(),
-                flightEntity.getDeparturePoint(),
                 flightEntity.getDestinationPoint(),
-                flightEntity.getFlightNumber(),
-                flightEntity.getDepartureTime(),
-                flightEntity.getTotalSeats(),
+                flightEntity.getDepartureTime().toLocalDate(),
+                flightEntity.getDepartureTime().toLocalTime(),
                 flightEntity.getAvailableSeats()
         );
     }

@@ -1,19 +1,23 @@
 package az.edu.turing.controller;
 
 import az.edu.turing.domain.entity.FlightEntity;
+import az.edu.turing.mapper.FlightMapper;
+import az.edu.turing.model.dto.request.FlightRequest;
+import az.edu.turing.model.dto.response.FlightResponse;
 import az.edu.turing.service.inter.FlightService;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 public class FlightController {
 
     private final FlightService flightService;
 
-    public FlightController(FlightService flightService) {
+    private final FlightMapper flightMapper;
+
+    public FlightController(FlightService flightService, FlightMapper flightMapper) {
         this.flightService = flightService;
+        this.flightMapper = flightMapper;
     }
 
     FlightEntity create(FlightEntity flightEntity) {
@@ -28,19 +32,27 @@ public class FlightController {
         return flightService.getAll();
     }
 
-    FlightEntity getById(String id) {
-        return flightService.getById(UUID.fromString(id));
+    FlightResponse getById(long id) {
+        return flightMapper.toDto(flightService.getById(id));
     }
 
-    FlightEntity getByFlightNumber(int flightNumber) {
-        return flightService.getByFlightNumber(flightNumber);
+    FlightEntity deleteById(long id) {
+        return flightService.deleteById(id);
     }
 
-    FlightEntity deleteById(String id) {
-        return flightService.deleteById(UUID.fromString(id));
+    boolean existsById(long id) {
+        return flightService.existsById(id);
     }
 
-    boolean existsById(String id) {
-        return flightService.existsById(UUID.fromString(id));
+    boolean bookSeats(long flightId, int seats) {
+        return flightService.bookSeats(flightId, seats);
+    }
+
+    List<FlightResponse> getAllInNext24Hours() {
+        return getAll().stream().map(flightMapper::toDto).toList();
+    }
+
+    List<FlightResponse> searchFlights(FlightRequest request) {
+        return flightService.searchFlights(request).stream().map(flightMapper::toDto).toList();
     }
 }

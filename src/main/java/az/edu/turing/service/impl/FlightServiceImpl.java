@@ -3,11 +3,11 @@ package az.edu.turing.service.impl;
 import az.edu.turing.domain.dao.inter.FlightDao;
 import az.edu.turing.domain.entity.FlightEntity;
 import az.edu.turing.exception.FlightNotFoundException;
+import az.edu.turing.model.dto.request.FlightRequest;
 import az.edu.turing.service.inter.FlightService;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 public class FlightServiceImpl implements FlightService {
 
@@ -33,27 +33,22 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public FlightEntity getById(UUID id) {
+    public FlightEntity getById(long id) {
         return flightDao.getById(id).orElseThrow(FlightNotFoundException::new);
     }
 
     @Override
-    public FlightEntity getByFlightNumber(int flightNumber) {
-        return flightDao.getByFlightNumber(flightNumber).orElseThrow(FlightNotFoundException::new);
-    }
-
-    @Override
-    public FlightEntity deleteById(UUID id) {
+    public FlightEntity deleteById(long id) {
         return flightDao.deleteById(id);
     }
 
     @Override
-    public boolean existsById(UUID id) {
+    public boolean existsById(long id) {
         return flightDao.existsById(id);
     }
 
     @Override
-    public boolean bookSeats(UUID flightId, int seats) {
+    public boolean bookSeats(long flightId, int seats) {
         return flightDao.bookSeats(flightId, seats);
     }
 
@@ -64,5 +59,13 @@ public class FlightServiceImpl implements FlightService {
                 .stream()
                 .filter(e -> (e.getDepartureTime().isAfter(now) && e.getDepartureTime().isBefore(now.plusHours(24))))
                 .toList();
+    }
+
+    @Override
+    public List<FlightEntity> searchFlights(FlightRequest request) {
+        return getAll().stream().filter(e ->
+                e.getDestinationPoint().equals(request.getDestinationPoint())
+                        && e.getDepartureTime().toLocalDate().equals(request.getDate())
+                        && e.getAvailableSeats() >= request.getNumberOfPeople()).toList();
     }
 }

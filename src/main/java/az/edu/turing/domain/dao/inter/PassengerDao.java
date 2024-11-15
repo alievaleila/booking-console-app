@@ -4,10 +4,10 @@ import az.edu.turing.domain.dao.Dao;
 import az.edu.turing.domain.entity.PassengerEntity;
 
 import java.util.List;
-import java.util.UUID;
 
-public abstract class PassengerDao implements Dao<PassengerEntity, String> {
-    public abstract boolean existsById(String id);
+public abstract class PassengerDao implements Dao<PassengerEntity, Long> {
 
-    public abstract List<PassengerEntity> getPassengersByBookingId(UUID bookingId);
+    public abstract boolean existsById(Long id);
+
+    public abstract List<PassengerEntity> getPassengersByBookingId(Long bookingId);
 }

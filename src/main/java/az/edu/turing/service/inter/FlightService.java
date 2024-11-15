@@ -1,10 +1,10 @@
 package az.edu.turing.service.inter;
 
 import az.edu.turing.domain.entity.FlightEntity;
+import az.edu.turing.model.dto.request.FlightRequest;
+import az.edu.turing.model.dto.response.FlightResponse;
 
 import java.util.Collection;
-import java.util.Optional;
-import java.util.UUID;
 
 public interface FlightService {
 
@@ -14,15 +14,15 @@ public interface FlightService {
 
     Collection<FlightEntity> getAll();
 
-    FlightEntity getById(UUID id);
+    FlightEntity getById(long id);
 
-    FlightEntity getByFlightNumber(int flightNumber);
+    FlightEntity deleteById(long id);
 
-    FlightEntity deleteById(UUID id);
+    boolean existsById(long id);
 
-    boolean existsById(UUID id);
-
-    boolean bookSeats(UUID flightId, int seats);
+    boolean bookSeats(long flightId, int seats);
 
     Collection<FlightEntity> getAllInNext24Hours();
+
+    Collection<FlightEntity> searchFlights(FlightRequest request);
 }

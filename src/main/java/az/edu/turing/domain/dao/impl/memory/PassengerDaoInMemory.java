@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public class PassengerDaoInMemory extends PassengerDao {
 
@@ -25,14 +24,14 @@ public class PassengerDaoInMemory extends PassengerDao {
     }
 
     @Override
-    public Optional<PassengerEntity> getById(String id) {
+    public Optional<PassengerEntity> getById(Long id) {
         return PASSENGERS.stream()
                 .filter(passengerEntity -> passengerEntity.getId().equals(id))
                 .findFirst();
     }
 
     @Override
-    public PassengerEntity deleteById(String id) {
+    public PassengerEntity deleteById(Long id) {
         return null;
     }
 
@@ -42,13 +41,13 @@ public class PassengerDaoInMemory extends PassengerDao {
     }
 
     @Override
-    public boolean existsById(String id) {
+    public boolean existsById(Long id) {
         return PASSENGERS.stream()
                 .anyMatch(passengerEntity -> passengerEntity.getId().equals(id));
     }
 
     @Override
-    public List<PassengerEntity> getPassengersByBookingId(UUID bookingId) {
+    public List<PassengerEntity> getPassengersByBookingId(Long bookingId) {
         return List.of();
     }
 }

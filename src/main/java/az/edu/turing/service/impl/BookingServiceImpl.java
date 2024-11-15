@@ -30,7 +30,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public BookingResponseDto deleteBooking(String id) {
+    public BookingResponseDto deleteBooking(long id) {
         bookingDao.getById(id).stream()
                 .findAny()
                 .orElseThrow(() -> new BookingNotFoundException("There is no booking with this id: " + id));
@@ -43,7 +43,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public BookingResponseDto getBookingDetails(String id) {
+    public BookingResponseDto getBookingDetails(long id) {
         BookingEntity bookingEntity = bookingDao.getById(id).stream()
                 .findAny()
                 .orElseThrow(() -> new BookingNotFoundException("There is no booking with this id:" + id));

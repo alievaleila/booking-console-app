@@ -5,6 +5,6 @@ import az.edu.turing.model.dto.response.BookingResponseDto;
 
 public interface BookingService {
     BookingResponseDto createBooking(BookingRequestDto bookingRequestDto);
-    BookingResponseDto deleteBooking(String id);
-    BookingResponseDto getBookingDetails(String id);
+    BookingResponseDto deleteBooking(long id);
+    BookingResponseDto getBookingDetails(long id);
 }

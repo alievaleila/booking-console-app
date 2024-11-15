@@ -8,11 +8,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 
 public class FlightDaoInMemory extends FlightDao {
 
-    private final Map<UUID, FlightEntity> flights = new HashMap<>();
+    private final Map<Long, FlightEntity> flights = new HashMap<>();
 
     @Override
     public FlightEntity create(FlightEntity flight) {
@@ -26,12 +25,12 @@ public class FlightDaoInMemory extends FlightDao {
     }
 
     @Override
-    public Optional<FlightEntity> getById(UUID id) {
+    public Optional<FlightEntity> getById(Long id) {
         return Optional.ofNullable(flights.get(id));
     }
 
     @Override
-    public FlightEntity deleteById(UUID id) {
+    public FlightEntity deleteById(Long id) {
         return flights.remove(id);
     }
 
@@ -42,13 +41,8 @@ public class FlightDaoInMemory extends FlightDao {
     }
 
     @Override
-    public boolean existsById(UUID flightId) {
+    public boolean existsById(Long flightId) {
         return flights.containsKey(flightId);
-    }
-
-    @Override
-    public Optional<FlightEntity> getByFlightNumber(int flightNumber) {
-        return flights.values().stream().filter(e -> e.getFlightNumber() == flightNumber).findFirst();
     }
 }
 
