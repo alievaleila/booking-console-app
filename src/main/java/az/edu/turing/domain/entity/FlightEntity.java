@@ -11,8 +11,8 @@ public class FlightEntity {
     private String departurePoint;
     private String destinationPoint;
     private LocalDateTime departureTime;
-    private int totalSeats;
-    private int availableSeats;
+    private Integer totalSeats;
+    private Integer availableSeats;
 
     private static long idCounter = 1;
 
@@ -61,7 +61,7 @@ public class FlightEntity {
         this.departureTime = departureTime;
     }
 
-    public int getTotalSeats() {
+    public Integer getTotalSeats() {
         return totalSeats;
     }
 
@@ -69,7 +69,7 @@ public class FlightEntity {
         this.totalSeats = totalSeats;
     }
 
-    public int getAvailableSeats() {
+    public Integer getAvailableSeats() {
         return availableSeats;
     }
 

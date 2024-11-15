@@ -1,24 +1,38 @@
-package az.edu.turing.model.dto.response;
+package az.edu.turing.model.dto.request;
 
 import java.time.LocalDateTime;
 
-public class FlightResponse {
+public class FlightRequestDto {
 
+    private long id;
     private String departurePoint;
     private String destinationPoint;
     private LocalDateTime departureTime;
     private int totalSeats;
     private int availableSeats;
 
-    public FlightResponse() {
+    public FlightRequestDto() {
     }
 
-    public FlightResponse(String departurePoint, String destinationPoint, LocalDateTime departureTime, int totalSeats, int availableSeats) {
+    public FlightRequestDto(long id) {
+        this.id = id;
+    }
+
+    public FlightRequestDto(long id, String departurePoint, String destinationPoint, LocalDateTime departureTime, int totalSeats, int availableSeats) {
+        this.id = id;
         this.departurePoint = departurePoint;
         this.destinationPoint = destinationPoint;
         this.departureTime = departureTime;
         this.totalSeats = totalSeats;
         this.availableSeats = availableSeats;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getDeparturePoint() {
@@ -63,8 +77,9 @@ public class FlightResponse {
 
     @Override
     public String toString() {
-        return "FlightResponse{" +
-                "departurePoint='" + departurePoint + '\'' +
+        return "FlightRequest{" +
+                "id=" + id +
+                ", departurePoint='" + departurePoint + '\'' +
                 ", destinationPoint='" + destinationPoint + '\'' +
                 ", departureTime=" + departureTime +
                 ", totalSeats=" + totalSeats +
