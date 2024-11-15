@@ -20,4 +20,6 @@ public class BookingManagementApp {
 //        FlightController flightController = new FlightController();
 //        Menu menu = new Menu(flightController);
 //    }
+    }
 }
+
