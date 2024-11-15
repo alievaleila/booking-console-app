@@ -31,10 +31,10 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingResponseDto deleteBooking(long id) {
-        bookingDao.getById(id).stream()
+        BookingEntity bookingEntity = bookingDao.getById(id).stream()
                 .findAny()
                 .orElseThrow(() -> new BookingNotFoundException("There is no booking with this id: " + id));
-        BookingEntity bookingEntity = bookingDao.deleteById(id);
+        bookingDao.deleteById(id);
         return new BookingResponseDto(
                 bookingEntity.getFlight(),
                 bookingEntity.getPassengers(),
@@ -47,6 +47,19 @@ public class BookingServiceImpl implements BookingService {
         BookingEntity bookingEntity = bookingDao.getById(id).stream()
                 .findAny()
                 .orElseThrow(() -> new BookingNotFoundException("There is no booking with this id:" + id));
+        return new BookingResponseDto(
+                bookingEntity.getFlight(),
+                bookingEntity.getPassengers(),
+                bookingEntity.isActive()
+        );
+    }
+
+    @Override
+    public BookingResponseDto updateBooking(BookingRequestDto bookingRequestDto) {
+        if(!bookingDao.existsById(bookingRequestDto.getId())) {
+            throw new BookingNotFoundException("There is no booking with this id: " + bookingRequestDto.getId());
+        }
+        BookingEntity bookingEntity = bookingDao.update(mapper.toEntity(bookingRequestDto));
         return new BookingResponseDto(
                 bookingEntity.getFlight(),
                 bookingEntity.getPassengers(),

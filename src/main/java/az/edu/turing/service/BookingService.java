@@ -7,4 +7,5 @@ public interface BookingService {
     BookingResponseDto createBooking(BookingRequestDto bookingRequestDto);
     BookingResponseDto deleteBooking(long id);
     BookingResponseDto getBookingDetails(long id);
+    BookingResponseDto updateBooking(BookingRequestDto bookingRequestDto);
 }

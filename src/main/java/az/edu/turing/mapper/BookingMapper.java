@@ -8,17 +8,17 @@ public class BookingMapper implements EntityMapper<BookingEntity, BookingRequest
     public BookingEntity toEntity(BookingRequestDto bookingRequestDto) {
         return new BookingEntity(
                 bookingRequestDto.getFlight(),
-                bookingRequestDto.getPassengers(),
-                bookingRequestDto.isActive()
+                bookingRequestDto.getPassengers()
         );
     }
 
     @Override
     public BookingRequestDto toDto(BookingEntity bookingEntity) {
         return new BookingRequestDto(
-            bookingEntity.getFlight(),
-            bookingEntity.getPassengers(),
-            bookingEntity.isActive()
+                bookingEntity.getId(),
+                bookingEntity.getFlight(),
+                bookingEntity.getPassengers(),
+                bookingEntity.isActive()
         );
     }
 }

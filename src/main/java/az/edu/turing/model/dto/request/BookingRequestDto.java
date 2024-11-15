@@ -8,6 +8,7 @@ import java.util.UUID;
 
 public class BookingRequestDto {
 
+    private long id;
     private FlightEntity flight;
     private List<PassengerEntity> passengers;
     private boolean isActive;
@@ -15,10 +16,15 @@ public class BookingRequestDto {
     public BookingRequestDto() {
     }
 
-    public BookingRequestDto( FlightEntity flight, List<PassengerEntity> passengers, boolean isActive) {
+    public BookingRequestDto(long id, FlightEntity flight, List<PassengerEntity> passengers, boolean isActive) {
+        this.id = id;
         this.flight = flight;
         this.passengers = passengers;
         this.isActive = isActive;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public FlightEntity getFlight() {

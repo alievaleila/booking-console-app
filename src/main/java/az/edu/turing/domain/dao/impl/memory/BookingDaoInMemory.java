@@ -30,7 +30,9 @@ public class BookingDaoInMemory extends BookingDao {
 
     @Override
     public BookingEntity deleteById(Long id) {
-        return BOOKINGS.remove(id);
+        BookingEntity bookingEntity = BOOKINGS.get(id);
+        bookingEntity.setActive(false);
+        return update(bookingEntity);
     }
 
     @Override
@@ -40,6 +42,7 @@ public class BookingDaoInMemory extends BookingDao {
 
     @Override
     public boolean existsById(Long id) {
-        return BOOKINGS.get(id) != null;
+        return BOOKINGS.values().stream()
+                .anyMatch(that -> that.getId().equals(id));
     }
 }

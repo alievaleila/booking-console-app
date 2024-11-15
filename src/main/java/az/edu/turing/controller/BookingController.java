@@ -1,16 +1,29 @@
 package az.edu.turing.controller;
 
-import az.edu.turing.domain.dao.inter.BookingDao;
-import az.edu.turing.domain.dao.inter.FlightDao;
+import az.edu.turing.model.dto.request.BookingRequestDto;
+import az.edu.turing.model.dto.response.BookingResponseDto;
 import az.edu.turing.service.BookingService;
-import az.edu.turing.service.inter.FlightService;
 
 public class BookingController {
     private final BookingService bookingService;
-    private final FlightService flightService;
 
-    public BookingController(BookingDao bookingDao, FlightDao flightDao, BookingService bookingService, FlightService flightService) {
+    public BookingController(BookingService bookingService) {
         this.bookingService = bookingService;
-        this.flightService = flightService;
+    }
+
+    public BookingResponseDto create(BookingRequestDto bookingRequestDto) {
+        return bookingService.createBooking(bookingRequestDto);
+    }
+
+    public BookingResponseDto getById(long id) {
+        return bookingService.getBookingDetails(id);
+    }
+
+    public BookingResponseDto update(BookingRequestDto bookingRequestDto) {
+        return bookingService.updateBooking(bookingRequestDto);
+    }
+
+    public BookingResponseDto delete(long id) {
+        return bookingService.deleteBooking(id);
     }
 }
