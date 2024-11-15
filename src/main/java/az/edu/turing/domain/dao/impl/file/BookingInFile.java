@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class BookingInFile extends BookingDao {
+
     private final FileUtil<BookingEntity> fileUtil;
     private final InputUtil inputUtil;
 
@@ -18,7 +19,7 @@ public class BookingInFile extends BookingDao {
     }
 
     @Override
-    public boolean existsById(String bookingId) {
+    public boolean existsById(Long bookingId) {
         List<BookingEntity> entityList = fileUtil.readObjectFromFile();
 
         return entityList.stream().anyMatch(bookingEntity -> bookingEntity.getId().equals(bookingId));
@@ -38,7 +39,7 @@ public class BookingInFile extends BookingDao {
     }
 
     @Override
-    public Optional<BookingEntity> getById(String bookingId) {
+    public Optional<BookingEntity> getById(Long bookingId) {
         List<BookingEntity> entityList = fileUtil.readObjectFromFile();
         for (BookingEntity bookingEntity : entityList) {
             if (bookingEntity.getId().equals(bookingId)) {
@@ -49,7 +50,7 @@ public class BookingInFile extends BookingDao {
     }
 
     @Override
-    public BookingEntity deleteById(String bookingId) {
+    public BookingEntity deleteById(Long bookingId) {
         List<BookingEntity> entityList = fileUtil.readObjectFromFile();
         for (BookingEntity bookingEntity : entityList) {
             if (bookingEntity.getId().equals(bookingId)) {

@@ -2,32 +2,33 @@ package az.edu.turing.domain.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.UUID;
 
 public class PassengerEntity implements Serializable {
 
-    private final String id;
+    private Long id;
     private String name;
     private String surname;
 
-    public PassengerEntity(String id) {
-        this.id = id;
-    }
+    private static long idCounter = 1;
 
     public PassengerEntity(String name, String surname) {
-        this.id = UUID.randomUUID().toString();
+        this.id = idCounter++;
         this.name = name;
         this.surname = surname;
     }
 
-    public PassengerEntity(String id, String name, String surname) {
+    public PassengerEntity(Long id, String name, String surname) {
         this.id = id;
         this.name = name;
         this.surname = surname;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

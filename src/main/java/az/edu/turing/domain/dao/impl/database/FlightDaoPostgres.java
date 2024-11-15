@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public class FlightDaoPostgres extends FlightDao {
 
@@ -23,13 +22,13 @@ public class FlightDaoPostgres extends FlightDao {
         this.connectionHelper = connectionHelper;
         String createTableQuery =
                 "CREATE TABLE IF NOT EXISTS Flights(" +
-                        "flight_id UUID PRIMARY KEY," +
+                        "flight_id BIGSERIAL PRIMARY KEY," +
                         "flight_departurepoint VARCHAR(255) NOT NULL," +
                         "flight_destinationpoint VARCHAR(255) NOT NULL," +
-                        "flight_number int NOT NULL UNIQUE," +
                         "flight_departuretime TIMESTAMP(3) NOT NULL," +
                         "flight_totalseats int NOT NULL," +
                         "flight_availableseats int NOT NULL);";
+
         try (Connection connection = connectionHelper.getConnection();
              PreparedStatement ps = connection.prepareStatement(createTableQuery)) {
             int i = ps.executeUpdate();
@@ -42,17 +41,16 @@ public class FlightDaoPostgres extends FlightDao {
     @Override
     public FlightEntity create(FlightEntity flightEntity) {
         String query = "INSERT INTO Flights(flight_id, flight_departurepoint, flight_destinationpoint, " +
-                "flight_number, flight_departuretime, flight_totalseats, flight_availableseats) " +
-                "VALUES(?, ?, ?, ?, ?, ?, ?) RETURNING *";
+                "flight_departuretime, flight_totalseats, flight_availableseats) " +
+                "VALUES(?, ?, ?, ?, ?, ?) RETURNING *";
         try (Connection connection = connectionHelper.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setObject(1, flightEntity.getId());
             ps.setString(2, flightEntity.getDeparturePoint());
             ps.setString(3, flightEntity.getDestinationPoint());
-            ps.setInt(4, flightEntity.getFlightNumber());
-            ps.setTimestamp(5, Timestamp.valueOf(flightEntity.getDepartureTime()));
-            ps.setInt(6, flightEntity.getTotalSeats());
-            ps.setInt(7, flightEntity.getAvailableSeats());
+            ps.setTimestamp(4, Timestamp.valueOf(flightEntity.getDepartureTime()));
+            ps.setInt(5, flightEntity.getTotalSeats());
+            ps.setInt(6, flightEntity.getAvailableSeats());
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -77,18 +75,18 @@ public class FlightDaoPostgres extends FlightDao {
                 flights.add(mapResultSetToFlightEntity(rs));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
         return flights;
     }
 
     @Override
-    public Optional<FlightEntity> getById(UUID id) {
+    public Optional<FlightEntity> getById(Long id) {
         String query = "SELECT * FROM Flights WHERE flight_id = ?";
         try (Connection connection = connectionHelper.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setObject(1, id);
+            ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return Optional.of(mapResultSetToFlightEntity(rs));
@@ -101,11 +99,11 @@ public class FlightDaoPostgres extends FlightDao {
     }
 
     @Override
-    public FlightEntity deleteById(UUID id) {
+    public FlightEntity deleteById(Long id) {
         String query = "DELETE FROM Flights WHERE flight_id = ? RETURNING *";
         try (Connection connection = connectionHelper.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setObject(1, id);
+            ps.setLong(1, id);
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -120,7 +118,7 @@ public class FlightDaoPostgres extends FlightDao {
     @Override
     public FlightEntity update(FlightEntity flightEntity) {
         String query = "UPDATE Flights " +
-                "SET flight_departurepoint = ?, flight_destinationpoint = ?, flight_number = ?, " +
+                "SET flight_departurepoint = ?, flight_destinationpoint = ?, " +
                 "flight_departuretime = ?, flight_totalseats = ?, flight_availableseats = ? WHERE flight_id = ? RETURNING *";
 
         try (Connection connection = connectionHelper.getConnection();
@@ -128,11 +126,10 @@ public class FlightDaoPostgres extends FlightDao {
 
             ps.setString(1, flightEntity.getDeparturePoint());
             ps.setString(2, flightEntity.getDestinationPoint());
-            ps.setInt(3, flightEntity.getFlightNumber());
-            ps.setTimestamp(4, Timestamp.valueOf(flightEntity.getDepartureTime()));
-            ps.setInt(5, flightEntity.getTotalSeats());
-            ps.setInt(6, flightEntity.getAvailableSeats());
-            ps.setObject(7, flightEntity.getId());
+            ps.setTimestamp(3, Timestamp.valueOf(flightEntity.getDepartureTime()));
+            ps.setInt(4, flightEntity.getTotalSeats());
+            ps.setInt(5, flightEntity.getAvailableSeats());
+            ps.setLong(6, flightEntity.getId());
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -145,21 +142,20 @@ public class FlightDaoPostgres extends FlightDao {
         return null;
     }
 
+    @Override
+    public boolean existsById(Long id) {
+        Optional<FlightEntity> flightEntity = getById(id);
+        return flightEntity.isPresent();
+    }
+
     private FlightEntity mapResultSetToFlightEntity(ResultSet rs) throws SQLException {
         FlightEntity flightEntity = new FlightEntity();
-        flightEntity.setId(rs.getObject("flight_id", UUID.class));
+        flightEntity.setId(rs.getLong("flight_id"));
         flightEntity.setDeparturePoint(rs.getString("flight_departurepoint"));
         flightEntity.setDestinationPoint(rs.getString("flight_destinationpoint"));
-        flightEntity.setFlightNumber(rs.getInt("flight_number"));
         flightEntity.setTotalSeats(rs.getInt("flight_totalseats"));
         flightEntity.setAvailableSeats(rs.getInt("flight_availableseats"));
         return flightEntity;
-    }
-
-    @Override
-    public boolean existsById(String id) {
-        Optional<FlightEntity> flightEntity = getById(UUID.fromString(String.valueOf(id)));
-        return flightEntity.isPresent();
     }
 }
 

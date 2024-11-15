@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class BookingDaoInMemory extends BookingDao {
 
-    private static final Map<String, BookingEntity> BOOKINGS = new HashMap<>();
+    private static final Map<Long, BookingEntity> BOOKINGS = new HashMap<>();
 
     @Override
     public BookingEntity create(BookingEntity bookingEntity) {
@@ -24,12 +24,12 @@ public class BookingDaoInMemory extends BookingDao {
     }
 
     @Override
-    public Optional<BookingEntity> getById(String id) {
+    public Optional<BookingEntity> getById(Long id) {
         return Optional.ofNullable(BOOKINGS.get(id));
     }
 
     @Override
-    public BookingEntity deleteById(String id) {
+    public BookingEntity deleteById(Long id) {
         return BOOKINGS.remove(id);
     }
 
@@ -39,7 +39,7 @@ public class BookingDaoInMemory extends BookingDao {
     }
 
     @Override
-    public boolean existsById(String id) {
+    public boolean existsById(Long id) {
         return BOOKINGS.get(id) != null;
     }
 }

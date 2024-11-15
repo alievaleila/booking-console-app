@@ -7,52 +7,33 @@ import java.util.UUID;
 
 public class FlightEntity {
 
-    private UUID id;
+    private Long id;
     private String departurePoint;
     private String destinationPoint;
-    private int flightNumber;
     private LocalDateTime departureTime;
     private int totalSeats;
     private int availableSeats;
 
-    public FlightEntity(){
+    private static long idCounter = 1;
+
+    public FlightEntity() {
     }
 
-    public FlightEntity(long id, String destinationPoint, String departurepoint, int flightNumber,
-                        LocalDateTime departureTime, int totalSeats, int availableSeats) {
-    }
-
-    public FlightEntity(UUID id) {
-        this.id = id;
-    }
-
-    public FlightEntity(String destinationPoint, int flightNumber, int totalSeats, LocalDateTime departureTime) {
-        this.id = UUID.randomUUID();
-        this.departurePoint = "Kiev";
-        this.destinationPoint = destinationPoint;
-        this.flightNumber = flightNumber;
-        this.totalSeats = totalSeats;
-        this.departureTime = departureTime;
-        this.availableSeats = totalSeats;
-    }
-
-    public FlightEntity(UUID id, String departurePoint, String destinationPoint,
-                        Integer flightNumber, LocalDateTime departureTime, Integer totalSeats, Integer availableSeats) {
-        this.id = id;
+    public FlightEntity(String departurePoint, String destinationPoint, LocalDateTime departureTime,
+                        int totalSeats, int availableSeats) {
+        this.id = idCounter++;
         this.departurePoint = departurePoint;
         this.destinationPoint = destinationPoint;
-        this.flightNumber = flightNumber;
-        this.departureTime = LocalDateTime.now();
+        this.departureTime = departureTime;
         this.totalSeats = totalSeats;
         this.availableSeats = availableSeats;
     }
 
-
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -70,14 +51,6 @@ public class FlightEntity {
 
     public void setDestinationPoint(String destinationPoint) {
         this.destinationPoint = destinationPoint;
-    }
-
-    public int getFlightNumber() {
-        return flightNumber;
-    }
-
-    public void setFlightNumber(int flightNumber) {
-        this.flightNumber = flightNumber;
     }
 
     public LocalDateTime getDepartureTime() {

@@ -7,7 +7,6 @@ import az.edu.turing.util.InputUtil;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public class PassengerInFile extends PassengerDao {
 
@@ -34,7 +33,7 @@ public class PassengerInFile extends PassengerDao {
     }
 
     @Override
-    public Optional<PassengerEntity> getById(String passengerId) {
+    public Optional<PassengerEntity> getById(Long passengerId) {
         List<PassengerEntity> entityList = fileUtil.readObjectFromFile();
         for (PassengerEntity passengerEntity : entityList) {
             if (passengerEntity.getId().equals(passengerId)) {
@@ -45,7 +44,7 @@ public class PassengerInFile extends PassengerDao {
     }
 
     @Override
-    public PassengerEntity deleteById(String passengerId) {
+    public PassengerEntity deleteById(Long passengerId) {
         List<PassengerEntity> entityList = fileUtil.readObjectFromFile();
         for (PassengerEntity passengerEntity : entityList) {
             if (passengerEntity.getId().equals(passengerId)) {
@@ -71,14 +70,13 @@ public class PassengerInFile extends PassengerDao {
     }
 
     @Override
-    public boolean existsById(String passengerId) {
+    public boolean existsById(Long passengerId) {
         List<PassengerEntity> entityList = fileUtil.readObjectFromFile();
         return entityList.stream().anyMatch(passengerEntity -> passengerEntity.getId().equals(passengerId));
     }
 
     @Override
-    public List<PassengerEntity> getPassengersByBookingId(UUID bookingId) {
+    public List<PassengerEntity> getPassengersByBookingId(Long bookingId) {
         return List.of();
     }
-
 }

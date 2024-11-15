@@ -7,9 +7,9 @@ import az.edu.turing.util.InputUtil;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public class FlightInFile extends FlightDao {
+
     private final FileUtil<FlightEntity> fileUtil;
     private final InputUtil inputUtil;
 
@@ -17,7 +17,6 @@ public class FlightInFile extends FlightDao {
         this.fileUtil = fileUtil;
         this.inputUtil = inputUtil;
     }
-
 
     @Override
     public FlightEntity create(FlightEntity flightEntity) {
@@ -33,7 +32,7 @@ public class FlightInFile extends FlightDao {
     }
 
     @Override
-    public Optional<FlightEntity> getById(UUID id) {
+    public Optional<FlightEntity> getById(Long id) {
         List<FlightEntity> entityList = fileUtil.readObjectFromFile();
         for (FlightEntity flightEntity : entityList) {
             if (flightEntity.getId().equals(id)) {
@@ -45,7 +44,7 @@ public class FlightInFile extends FlightDao {
     }
 
     @Override
-    public FlightEntity deleteById(UUID id) {
+    public FlightEntity deleteById(Long id) {
         List<FlightEntity> entityList = fileUtil.readObjectFromFile();
         for (FlightEntity flightEntity : entityList) {
             if (flightEntity.getId().equals(id)) {
@@ -75,7 +74,7 @@ public class FlightInFile extends FlightDao {
     }
 
     @Override
-    public boolean existsById(String flightId) {
+    public boolean existsById(Long flightId) {
         List<FlightEntity> entityList = fileUtil.readObjectFromFile();
         return entityList.stream().anyMatch(flightEntity -> flightEntity.getId().equals(flightId));
     }
