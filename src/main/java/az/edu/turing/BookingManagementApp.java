@@ -13,11 +13,11 @@ public class BookingManagementApp {
 //        System.out.println(passengerEntity);
 //        System.out.println(flightEntity);
 //        System.out.println(bookingEntity);
-
+//
 //        FlightEntity flightEntity = new FlightEntity("Europa", 1234, 55, LocalDateTime.now());
 //        FlightDaoPostgres flightDaoPostgres = new FlightDaoPostgres(new ConnectionHelper());
 //        flightDaoPostgres.create(flightEntity);
 //        FlightController flightController = new FlightController();
 //        Menu menu = new Menu(flightController);
-    }
+//    }
 }

@@ -11,6 +11,10 @@ public class PassengerEntity implements Serializable {
 
     private static long idCounter = 1;
 
+    public PassengerEntity(Long id) {
+        this.id = id;
+    }
+
     public PassengerEntity(String name, String surname) {
         this.id = idCounter++;
         this.name = name;

@@ -2,7 +2,7 @@ package az.edu.turing.controller;
 
 import az.edu.turing.model.dto.request.BookingRequestDto;
 import az.edu.turing.model.dto.response.BookingResponseDto;
-import az.edu.turing.service.BookingService;
+import az.edu.turing.service.inter.BookingService;
 
 public class BookingController {
     private final BookingService bookingService;

@@ -6,7 +6,7 @@ import az.edu.turing.exception.BookingNotFoundException;
 import az.edu.turing.mapper.BookingMapper;
 import az.edu.turing.model.dto.request.BookingRequestDto;
 import az.edu.turing.model.dto.response.BookingResponseDto;
-import az.edu.turing.service.BookingService;
+import az.edu.turing.service.inter.BookingService;
 
 
 public class BookingServiceImpl implements BookingService {

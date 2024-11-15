@@ -134,7 +134,7 @@ public class PassengerDaoPostgres extends PassengerDao {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                String passengerId = rs.getString("id");
+                Long passengerId = rs.getLong(  "id");
                 PassengerEntity passenger = new PassengerEntity(passengerId);
                 passengers.add(passenger);
             }
