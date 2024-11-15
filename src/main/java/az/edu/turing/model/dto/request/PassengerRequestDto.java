@@ -4,24 +4,29 @@ import java.util.UUID;
 
 public class PassengerRequestDto {
 
-    private final String id;
+    private Long id;
     private String name;
     private String surname;
 
-    public PassengerRequestDto(String name, String surname) {
-        this.id = UUID.randomUUID().toString();
+    public PassengerRequestDto() {
+    }
+
+    public PassengerRequestDto(Long id) {
+        this.id = id;
+    }
+
+    public PassengerRequestDto(Long id, String name, String surname) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
     }
 
-    public PassengerRequestDto(String id, String name, String surname) {
-        this.id = UUID.randomUUID().toString();
-        this.name = name;
-        this.surname = surname;
-    }
-
-    public String getId() {
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -39,4 +44,15 @@ public class PassengerRequestDto {
     public void setSurname(String surname) {
         this.surname = surname;
     }
+
+    @Override
+    public String toString() {
+        return "PassengerRequestDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                '}';
+    }
 }
+
+
