@@ -1,11 +1,12 @@
 package az.edu.turing.domain.entity;
 
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-public class FlightEntity {
+public class FlightEntity implements Serializable {
 
     private Long id;
     private String departurePoint;

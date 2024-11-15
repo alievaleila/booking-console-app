@@ -1,9 +1,10 @@
 package az.edu.turing.domain.entity;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class BookingEntity {
+public class BookingEntity implements Serializable {
 
     private Long id;
     private FlightEntity flight;
