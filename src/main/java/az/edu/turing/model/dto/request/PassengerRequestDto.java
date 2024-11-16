@@ -21,6 +21,11 @@ public class PassengerRequestDto {
         this.surname = surname;
     }
 
+    public PassengerRequestDto(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
+    }
+
     public Long getId() {
         return id;
     }

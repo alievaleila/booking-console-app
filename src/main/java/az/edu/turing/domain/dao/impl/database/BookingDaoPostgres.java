@@ -103,6 +103,53 @@ public class BookingDaoPostgres extends BookingDao {
     }
 
     @Override
+    public List<String> findMyFlightsByNameAndSurname(String name, String surname) {
+        String query = "SELECT name, surname, flight_departurepoint, flight_destinationpoint, " +
+                "flight_departuretime, flight_totalseats, flight_availableseats " +
+                "FROM bookings " +
+                "INNER JOIN passengers ON bookings.id = passengers.id " +
+                "INNER JOIN Flights ON bookings.id = Flights.id " +
+                "WHERE name = ? AND surname = ?";
+
+        List<String> flights = new ArrayList<>();
+
+        try (Connection connection = connectionHelper.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+
+            ps.setString(1, name);
+            ps.setString(2, surname);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    String flightInfo = String.format(
+                            "Name: %s, Surname: %s, Departure: %s, Destination: %s, " +
+                                    "Departure Time: %s, Total Seats: %d, Available Seats: %d",
+                            rs.getString("name"),
+                            rs.getString("surname"),
+                            rs.getString("flight_departurepoint"),
+                            rs.getString("flight_destinationpoint"),
+                            rs.getTimestamp("flight_departuretime"),
+                            rs.getInt("flight_totalseats"),
+                            rs.getInt("flight_availableseats")
+                    );
+                    flights.add(flightInfo);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Failed to retrieve flights");
+            e.printStackTrace();
+        }
+
+        if (flights.isEmpty()) {
+            System.out.println("No flights found for the passenger.");
+        }
+
+        return flights;
+    }
+
+
+    @Override
     public BookingEntity deleteById(Long id) {
         Optional<BookingEntity> booking = getById(id);
         if (booking.isPresent()) {

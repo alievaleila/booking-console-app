@@ -1,9 +1,19 @@
 package az.edu.turing.menu;
 
+import az.edu.turing.controller.BookingController;
 import az.edu.turing.controller.FlightController;
+import az.edu.turing.controller.PassengerController;
+import az.edu.turing.domain.entity.PassengerEntity;
 import az.edu.turing.exception.MenuException;
+import az.edu.turing.mapper.BookingMapper;
+import az.edu.turing.mapper.FlightMapper;
+import az.edu.turing.mapper.PassengerMapper;
+import az.edu.turing.model.dto.request.BookingRequestDto;
 import az.edu.turing.model.dto.request.FlightRequestDto;
+import az.edu.turing.model.dto.request.PassengerRequestDto;
+import az.edu.turing.model.dto.response.BookingResponseDto;
 import az.edu.turing.model.dto.response.FlightResponse;
+import az.edu.turing.model.dto.response.PassengerResponseDto;
 import az.edu.turing.util.InputUtil;
 
 import java.time.Duration;
@@ -13,14 +23,19 @@ import java.util.List;
 public class Menu {
     public InputUtil inputUtil = new InputUtil();
     private final FlightController flightController;
+    private final BookingController bookingController;
+    private final FlightMapper flightMapper;
 
-    public Menu(FlightController flightController) {
+    public Menu(FlightController flightController, BookingController bookingController, FlightMapper flightMapper) {
         this.flightController = flightController;
+        this.bookingController = bookingController;
+        this.flightMapper = flightMapper;
         displayMenu();
     }
 
     public void displayMenu() {
-        while (true) {
+        boolean stop = false;
+        while (stop) {
             System.out.println("Choose the select menu!");
             int menu = inputUtil.getInteger(
                     """
@@ -82,14 +97,42 @@ public class Menu {
                         System.out.println("There is not flight!");
                     }
 
+                    BookingRequestDto bookingRequestDto = new BookingRequestDto(
+                            flightMapper.toEntity(flightResponse1),
+                            true
+                    );
+
+                    bookingController.create(bookingRequestDto);
+
                     break;
                 case 4:
+
+                    long bookingId = inputUtil.getInteger("Enter the booking ID to cancel it:");
+
+                    bookingController.delete(bookingId);
+
                     break;
                 case 5:
+
+                    String name, surname;
+                    while (true) {
+                        name = inputUtil.getString("Enter your name").trim();
+                        if (!name.isEmpty()) break;
+                        System.out.println("Name cannot be empty. Please try again.");
+                    }
+                    while (true) {
+                        surname = inputUtil.getString("Enter your surname").trim();
+                        if (!surname.isEmpty()) break;
+                        System.out.println("Surname cannot be empty. Please try again.");
+                    }
+
+                    List<String> flights = bookingController.findMyFlightsByNameAndSurname(name, surname);
+                    flights.forEach(System.out::println);
+
                     break;
                 case 6:
                     System.out.println("We are waiting again!");
-                    System.exit(0);
+                    stop = true;
                     break;
                 default:
                     throw new MenuException("Menu not found!");

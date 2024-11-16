@@ -16,6 +16,11 @@ public class BookingRequestDto {
     public BookingRequestDto() {
     }
 
+    public BookingRequestDto(FlightEntity flight, boolean isActive) {
+        this.flight = flight;
+        this.isActive = isActive;
+    }
+
     public BookingRequestDto(long id, FlightEntity flight, List<PassengerEntity> passengers, boolean isActive) {
         this.id = id;
         this.flight = flight;

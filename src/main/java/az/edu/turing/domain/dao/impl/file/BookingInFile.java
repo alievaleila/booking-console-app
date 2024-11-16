@@ -26,6 +26,11 @@ public class BookingInFile extends BookingDao {
     }
 
     @Override
+    public List<String> findMyFlightsByNameAndSurname(String name, String surname) {
+        return List.of();
+    }
+
+    @Override
     public BookingEntity create(BookingEntity bookingEntity) {
         List<BookingEntity> bookingEntityList = fileUtil.readObjectFromFile();
         bookingEntityList.add(bookingEntity);
