@@ -3,10 +3,7 @@ package az.edu.turing.domain.dao.impl.memory;
 import az.edu.turing.domain.dao.inter.BookingDao;
 import az.edu.turing.domain.entity.BookingEntity;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class BookingDaoInMemory extends BookingDao {
 
@@ -45,4 +42,33 @@ public class BookingDaoInMemory extends BookingDao {
         return BOOKINGS.values().stream()
                 .anyMatch(that -> that.getId().equals(id));
     }
+
+    @Override
+    public List<String> findMyFlightsByNameAndSurname(String name, String surname) {
+        List<String> flights = new ArrayList<>();
+
+        BOOKINGS.values().stream()
+                .filter(booking -> booking.getPassengers().stream()
+                        .anyMatch(passenger -> passenger.getName().equalsIgnoreCase(name) &&
+                                passenger.getSurname().equalsIgnoreCase(surname)))
+                .forEach(booking -> {
+                    String flightInfo = String.format(
+                            "Departure: %s, Destination: %s, " +
+                                    "Departure Time: %s,  Total Seats: %d, Available Seats: %d",
+                            booking.getFlight().getDeparturePoint(),
+                            booking.getFlight().getDestinationPoint(),
+                            booking.getFlight().getDepartureTime(),
+                            booking.getFlight().getTotalSeats(),
+                            booking.getFlight().getAvailableSeats()
+                    );
+                    flights.add(flightInfo);
+                });
+
+        if (flights.isEmpty()) {
+            System.out.println("No flights found for the passenger.");
+        }
+
+        return flights;
+    }
+
 }
