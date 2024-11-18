@@ -64,8 +64,8 @@ public class PassengerInFile extends PassengerDao {
                 entity.setName(inputUtil.getString("Enter the new Passenger name"));
                 entity.setSurname(inputUtil.getString("Enter the new Passenger surname"));
             }
-            fileUtil.writeObjectToFile(passengerEntityList);
         }
+        fileUtil.writeObjectToFile(passengerEntityList);
         return passengerEntity;
     }
 
