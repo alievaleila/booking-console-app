@@ -1,4 +1,4 @@
-package az.edu.turing;
+package az.edu.turing.memory;
 
 import az.edu.turing.domain.dao.impl.memory.BookingDaoInMemory;
 import az.edu.turing.domain.entity.BookingEntity;

@@ -94,8 +94,7 @@ public class BookingInFile extends BookingDao {
         List<BookingEntity> bookingEntityList = fileUtil.readObjectFromFile();
         for (BookingEntity entity : bookingEntityList) {
             if (entity.getId().equals(bookingEntity.getId())) {
-                entity.setActive(inputUtil.getBoolean(
-                        Boolean.valueOf("Is this booking active? (true for no, false for yes): ")));
+                entity.setActive(inputUtil.getBoolean("Is this booking active? (true for no, false for yes): "));
                 entity.setFlight(inputUtil.getFlightEntity("Enter the new flight: "));
 
             }

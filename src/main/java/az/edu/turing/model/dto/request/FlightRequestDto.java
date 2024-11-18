@@ -20,7 +20,7 @@ public class FlightRequestDto {
         this.id = idCounter++;
         this.departurePoint = departurePoint;
         this.destinationPoint = destinationPoint;
-        this.departureTime = departureTime;
+        this.departureTime =departureTime;
         this.totalSeats = totalSeats;
         this.availableSeats = availableSeats;
     }

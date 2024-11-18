@@ -34,7 +34,7 @@ public class InputUtil {
         }
     }
 
-    public Boolean getBoolean(Boolean title) {
+    public Boolean getBoolean(String title) {
         Scanner sc = new Scanner(System.in);
         System.out.println(title + ":");
         return sc.nextBoolean();
