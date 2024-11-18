@@ -8,7 +8,8 @@ import az.edu.turing.mapper.FlightMapper;
 import az.edu.turing.model.dto.request.FlightRequestDto;
 import az.edu.turing.model.dto.response.FlightResponse;
 import az.edu.turing.service.inter.FlightService;
-
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -46,51 +47,53 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public Collection<FlightResponse> getAllFlightResponse() {
-        return flightDao.getAll().stream().map(flightMapper::toResp).toList();
-
+        return flightDao.getAll().stream()
+                .map(flightEntity -> flightMapper.toResp(flightMapper.toDto(flightEntity)))
+                .toList();
     }
 
     @Override
     public FlightResponse getById(long id) {
-        return flightDao.getById(id)
-                .map(flightMapper::toResp)
-                .orElseThrow(() -> new FlightNotFoundException("Flight not found with ID: " + id));
+        Optional<FlightEntity> flightEntityOptional = flightDao.getById(id);
+
+        if (flightEntityOptional.isPresent()) {
+            return flightMapper.toResp(flightMapper.toDto(flightEntityOptional.get()));
+        } else {
+            throw new FlightNotFoundException("Flight not found!");
+        }
     }
 
     @Override
     public FlightResponse deleteById(long id) {
         FlightEntity flightEntity = flightDao.deleteById(id);
         if (flightEntity != null) {
-            return flightMapper.toResp(flightEntity);
+            return flightMapper.toResp(flightMapper.toDto(flightEntity));
         }
         throw new FlightNotFoundException("Flight not found with ID: " + id);
     }
 
     @Override
-    public FlightResponse searchFlight(FlightRequestDto flightRequestDto) {
-        List<FlightEntity> flightEntityList = (List<FlightEntity>) flightDao.getAll();
-        return (FlightResponse) flightEntityList.stream().
-                filter(flight -> flight.getDeparturePoint().equals(flightRequestDto.getDeparturePoint())).
-                filter(flight -> flight.getDestinationPoint().equals(flightRequestDto.getDestinationPoint())).
-                filter(flight -> flight.getDepartureTime().equals(flightRequestDto.getDepartureTime())).
-                filter(flight -> flight.getTotalSeats().equals(flightRequestDto.getTotalSeats())).
-                filter(flight -> flight.getAvailableSeats().equals(flightRequestDto.getAvailableSeats()))
-                .toList().stream().map(flightMapper::toResp);
+    public List<FlightResponse> searchFlights(String destination, LocalDate date, int requiredSeats) {
+
+        List<FlightEntity> flightEntityList = new ArrayList<>(flightDao.getAll());
+
+        List<FlightResponse> matchingFlights = new ArrayList<>();
+
+        for (FlightEntity flight : flightEntityList) {
+            if (flight.getDestinationPoint().equals(destination) &&
+                    flight.getDepartureTime().toLocalDate().equals(date) &&
+                    flight.getAvailableSeats() >= requiredSeats) {
+
+                matchingFlights.add(flightMapper.toResp(flightMapper.toDto(flight)));
+            }
+        }
+
+        return matchingFlights;
     }
 
     @Override
     public boolean bookSeats(long flightId, int seats) {
-        Optional<FlightEntity> flightEntityOptional = flightDao.getById(flightId);
-        if (flightEntityOptional.isEmpty()) {
-            throw new RuntimeException("Flight not found with ID: " + flightId);
-        }
-        FlightEntity flightEntity = flightEntityOptional.get();
-        if (flightEntity.getAvailableSeats() < seats) {
-            return false;
-        }
-        flightEntity.setAvailableSeats(flightEntity.getAvailableSeats() - seats);
-        flightDao.update(flightEntity);
-        return true;
-
+        return false;
     }
 }
+

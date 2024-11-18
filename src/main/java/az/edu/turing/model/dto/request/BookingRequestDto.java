@@ -2,9 +2,7 @@ package az.edu.turing.model.dto.request;
 
 import az.edu.turing.domain.entity.FlightEntity;
 import az.edu.turing.domain.entity.PassengerEntity;
-
 import java.util.List;
-import java.util.UUID;
 
 public class BookingRequestDto {
 
@@ -13,16 +11,20 @@ public class BookingRequestDto {
     private List<PassengerEntity> passengers;
     private boolean isActive;
 
+    private static long idCounter = 1;
+
     public BookingRequestDto() {
     }
 
-    public BookingRequestDto(FlightEntity flight, boolean isActive) {
+    public BookingRequestDto(FlightEntity flight, List<PassengerEntity> passengers, boolean isActive) {
+        this.id = idCounter++;
         this.flight = flight;
+        this.passengers = passengers;
         this.isActive = isActive;
     }
 
     public BookingRequestDto(long id, FlightEntity flight, List<PassengerEntity> passengers, boolean isActive) {
-        this.id = id;
+        this.id = idCounter++;
         this.flight = flight;
         this.passengers = passengers;
         this.isActive = isActive;
