@@ -26,11 +26,11 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingResponseDto createBooking(BookingRequestDto bookingRequestDto) {
-        BookingEntity bookingEntity = null;
+        BookingEntity bookingEntity=null ;
         try {
 
             System.out.println("How many people are you?");
-            int countOfPeople = 0;
+            int countOfPeople =0;
 
             while (true) {
                 try {

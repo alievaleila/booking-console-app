@@ -16,7 +16,7 @@ public class FlightResponse {
     public FlightResponse(String departurePoint, String destinationPoint, LocalDateTime departureTime, int totalSeats, int availableSeats) {
         this.departurePoint = departurePoint;
         this.destinationPoint = destinationPoint;
-        this.departureTime = departureTime;
+        this.departureTime =departureTime ;
         this.totalSeats = totalSeats;
         this.availableSeats = availableSeats;
     }
