@@ -11,6 +11,9 @@ public class PassengerEntity implements Serializable {
 
     private static long idCounter = 1;
 
+    public PassengerEntity() {
+    }
+
     public PassengerEntity(Long id) {
         this.id = id;
     }

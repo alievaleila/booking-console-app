@@ -20,6 +20,7 @@ public class BookingResponseDto {
         this.isActive = isActive;
     }
 
+
     public FlightEntity getFlight() {
         return flight;
     }

@@ -21,6 +21,12 @@ public class BookingRequestDto {
         this.isActive = isActive;
     }
 
+    public BookingRequestDto(FlightEntity flight, List<PassengerEntity> passengers, boolean isActive) {
+        this.flight = flight;
+        this.passengers = passengers;
+        this.isActive = isActive;
+    }
+
     public BookingRequestDto(long id, FlightEntity flight, List<PassengerEntity> passengers, boolean isActive) {
         this.id = id;
         this.flight = flight;
@@ -28,8 +34,13 @@ public class BookingRequestDto {
         this.isActive = isActive;
     }
 
+
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public FlightEntity getFlight() {

@@ -3,8 +3,9 @@ package az.edu.turing.domain.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Objects;
-import java.util.UUID;
 
 public class FlightEntity implements Serializable {
 
@@ -28,6 +29,25 @@ public class FlightEntity implements Serializable {
         this.departureTime = departureTime;
         this.totalSeats = totalSeats;
         this.availableSeats = availableSeats;
+    }
+
+    public FlightEntity(Long id, String departurePoint, String destinationPoint, String departureTimeStr,
+                        Integer totalSeats, Integer availableSeats) {
+        this.id = id;
+        this.departurePoint = departurePoint;
+        this.destinationPoint = destinationPoint;
+        this.departureTime = convertStringToLocalDateTime(departureTimeStr);
+        this.totalSeats = totalSeats;
+        this.availableSeats = availableSeats;
+    }
+
+    private LocalDateTime convertStringToLocalDateTime(String departureTimeStr) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            return LocalDateTime.parse(departureTimeStr, formatter);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Invalid date format. Please use 'yyyy-MM-dd HH:mm'.");
+        }
     }
 
     public Long getId() {
