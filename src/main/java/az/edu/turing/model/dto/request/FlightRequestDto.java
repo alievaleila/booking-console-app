@@ -11,15 +11,13 @@ public class FlightRequestDto {
     private int totalSeats;
     private int availableSeats;
 
+    private static long idCounter = 1;
+
     public FlightRequestDto() {
     }
 
-    public FlightRequestDto(long id) {
-        this.id = id;
-    }
-
-    public FlightRequestDto(long id, String departurePoint, String destinationPoint, LocalDateTime departureTime, int totalSeats, int availableSeats) {
-        this.id = id;
+    public FlightRequestDto(String departurePoint, String destinationPoint, LocalDateTime departureTime, int totalSeats, int availableSeats) {
+        this.id = idCounter++;
         this.departurePoint = departurePoint;
         this.destinationPoint = destinationPoint;
         this.departureTime =departureTime;

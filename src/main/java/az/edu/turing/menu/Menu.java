@@ -2,22 +2,20 @@ package az.edu.turing.menu;
 
 import az.edu.turing.controller.BookingController;
 import az.edu.turing.controller.FlightController;
-import az.edu.turing.controller.PassengerController;
 import az.edu.turing.domain.entity.PassengerEntity;
 import az.edu.turing.exception.MenuException;
-import az.edu.turing.mapper.BookingMapper;
 import az.edu.turing.mapper.FlightMapper;
 import az.edu.turing.mapper.PassengerMapper;
 import az.edu.turing.model.dto.request.BookingRequestDto;
 import az.edu.turing.model.dto.request.FlightRequestDto;
 import az.edu.turing.model.dto.request.PassengerRequestDto;
-import az.edu.turing.model.dto.response.BookingResponseDto;
 import az.edu.turing.model.dto.response.FlightResponse;
-import az.edu.turing.model.dto.response.PassengerResponseDto;
 import az.edu.turing.util.InputUtil;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Menu {
@@ -25,18 +23,24 @@ public class Menu {
     private final FlightController flightController;
     private final BookingController bookingController;
     private final FlightMapper flightMapper;
+    private final PassengerMapper passengerMapper;
 
-    public Menu(FlightController flightController, BookingController bookingController, FlightMapper flightMapper) {
+    public Menu(FlightController flightController, BookingController bookingController,
+                FlightMapper flightMapper, PassengerMapper passengerMapper) {
         this.flightController = flightController;
         this.bookingController = bookingController;
         this.flightMapper = flightMapper;
+        this.passengerMapper = passengerMapper;
+    }
+
+    public void startMenu() {
         displayMenu();
     }
 
     public void displayMenu() {
-        boolean stop = false;
-        while (stop) {
-            System.out.println("Choose the select menu!");
+        System.out.println("Display menu started!");
+        boolean running = true;
+        while (running) {
             int menu = inputUtil.getInteger(
                     """
                             1.Online Board
@@ -48,12 +52,14 @@ public class Menu {
                             """);
             switch (menu) {
                 case 1:
+
                     System.out.println("ID - DEPARTURPOİNT - DESTİNATİONPOİNT - FLIGHTNUMBER - DEPARTURTIME - TOTALSEATS - AVAILABLESEATS");
                     List<FlightResponse> flightResponses = (List<FlightResponse>) flightController.getAll();
                     if (flightResponses.isEmpty()) {
                         System.out.println("There is not flight!");
                         continue;
                     }
+
                     boolean hasFlight = false;
                     for (FlightResponse flight : flightResponses) {
                         LocalDateTime now = LocalDateTime.now();
@@ -63,13 +69,14 @@ public class Menu {
                             hasFlight = true;
                             flightInfo(flight);
                         }
-
                     }
+
                     if (!hasFlight) {
                         System.out.println("There is not flight in last 24 hours!");
                     }
                     break;
                 case 2:
+
                     System.out.println("ID - DEPARTURPOİNT - DESTİNATİONPOİNT - FLIGHTNUMBER - DEPARTURTIME - TOTALSEATS - AVAILABLESEATS");
                     List<FlightResponse> flightResponse = (List<FlightResponse>) flightController.getAll();
                     if (flightResponse.isEmpty()) {
@@ -81,29 +88,48 @@ public class Menu {
                     }
                     break;
                 case 3:
-                    System.out.println("Enter the flight info!");
-                    int flightId = inputUtil.getInteger("Enter the flight total seats");
-                    String flightStart = inputUtil.getString("Enter the flightDepartur Point");
-                    String flightTo = inputUtil.getString("Enter the flight destination Point");
-                    LocalDateTime flightTime = LocalDateTime.parse(inputUtil.getString("Enter the flight time"));
-                    int totalSeats = inputUtil.getInteger("Enter the flight total seats");
-                    int availableSeats = inputUtil.getInteger("Enter the flight availableseats");
-                    FlightRequestDto flightResponse1 = new FlightRequestDto(flightId, flightStart, flightTo, flightTime, totalSeats, availableSeats);
+                    try {
 
-                    FlightResponse searchFlight = flightController.search(flightResponse1);
-                    if (searchFlight != null) {
-                        flightInfo(searchFlight);
-                    } else {
-                        System.out.println("There is not flight!");
+                        System.out.println("Enter the flight info!");
+
+                        String departure = inputUtil.getString("Enter departurePoint");
+                        String destination = inputUtil.getString("Enter the destination: ");
+                        LocalDate departureTime = LocalDate.parse(inputUtil.getString("Enter the departure date: "));
+                        int totalSeats = inputUtil.getInteger("Enter the total number of seats: ");
+                        int requiredSeats = inputUtil.getInteger("Enter the required seats: ");
+
+                        FlightRequestDto flightRequestDto = new FlightRequestDto(departure,
+                                destination, departureTime.atStartOfDay(), totalSeats, requiredSeats);
+
+                        List<FlightResponse> searched = flightController.search(destination, departureTime, requiredSeats);
+                        if (searched == null) {
+                            System.out.println("No flight found!");
+                            break;
+                        }
+
+                        int countOfPeople = inputUtil.getInteger("How many people are you?");
+
+                        List<PassengerEntity> passengerEntities = new ArrayList<>();
+                        for (int i = 0; i < countOfPeople; i++) {
+                            PassengerRequestDto passengerRequestDto = new PassengerRequestDto(
+                                    inputUtil.getString("Enter passenger's name"),
+                                    inputUtil.getString("Enter passenger's surname")
+                            );
+                            passengerEntities.add(passengerMapper.toEntity(passengerRequestDto));
+                        }
+
+                        BookingRequestDto bookingRequestDto = new BookingRequestDto(
+                                flightMapper.toEntity(flightRequestDto),
+                                passengerEntities,
+                                true
+                        );
+                        bookingController.create(bookingRequestDto);
+
+                        System.out.println("Booking successfully created!");
+                    } catch (Exception e) {
+                        System.out.println("An error occurred while creating the booking.");
+                        e.printStackTrace();
                     }
-
-                    BookingRequestDto bookingRequestDto = new BookingRequestDto(
-                            flightMapper.toEntity(flightResponse1),
-                            true
-                    );
-
-                    bookingController.create(bookingRequestDto);
-
                     break;
                 case 4:
 
@@ -115,31 +141,21 @@ public class Menu {
                 case 5:
 
                     String name, surname;
-                    while (true) {
-                        name = inputUtil.getString("Enter your name").trim();
-                        if (!name.isEmpty()) break;
-                        System.out.println("Name cannot be empty. Please try again.");
-                    }
-                    while (true) {
-                        surname = inputUtil.getString("Enter your surname").trim();
-                        if (!surname.isEmpty()) break;
-                        System.out.println("Surname cannot be empty. Please try again.");
-                    }
+                    name = inputUtil.getString("Enter your name");
+                    surname = inputUtil.getString("Enter your surname");
 
                     List<String> flights = bookingController.findMyFlightsByNameAndSurname(name, surname);
                     flights.forEach(System.out::println);
 
                     break;
                 case 6:
-                    System.out.println("We are waiting again!");
-                    stop = true;
+                    running = false;
+                    System.out.println("Exiting the program. Goodbye!");
                     break;
                 default:
                     throw new MenuException("Menu not found!");
             }
-
         }
-
     }
 
     public void flightInfo(FlightResponse flightResponse) {

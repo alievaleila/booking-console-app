@@ -4,6 +4,7 @@ import az.edu.turing.domain.dao.inter.BookingDao;
 import az.edu.turing.domain.entity.BookingEntity;
 import az.edu.turing.util.InputUtil;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +28,28 @@ public class BookingInFile extends BookingDao {
 
     @Override
     public List<String> findMyFlightsByNameAndSurname(String name, String surname) {
-        return List.of();
+
+        List<String> bookings = new ArrayList<>();
+        List<BookingEntity> myBookings = fileUtil.readObjectFromFile();
+
+        myBookings.stream()
+                .filter(booking -> booking.getPassengers().stream()
+                        .anyMatch(passenger -> passenger.getName().equalsIgnoreCase(name) &&
+                                passenger.getSurname().equalsIgnoreCase(surname)))
+                .forEach(booking -> {
+                    String flightInfo = String.format(
+                            "Departure: %s, Destination: %s, " +
+                                    "Departure Time: %s,  Total Seats: %d, Available Seats: %d",
+                            booking.getFlight().getDeparturePoint(),
+                            booking.getFlight().getDestinationPoint(),
+                            booking.getFlight().getDepartureTime(),
+                            booking.getFlight().getTotalSeats(),
+                            booking.getFlight().getAvailableSeats()
+                    );
+                    bookings.add(flightInfo);
+                });
+
+        return bookings;
     }
 
     @Override

@@ -8,6 +8,8 @@ public class PassengerRequestDto {
     private String name;
     private String surname;
 
+    private static long idCounter = 1;
+
     public PassengerRequestDto() {
     }
 
@@ -16,12 +18,13 @@ public class PassengerRequestDto {
     }
 
     public PassengerRequestDto(Long id, String name, String surname) {
-        this.id = id;
+        this.id = idCounter++;
         this.name = name;
         this.surname = surname;
     }
 
     public PassengerRequestDto(String name, String surname) {
+        this.id = idCounter++;
         this.name = name;
         this.surname = surname;
     }
