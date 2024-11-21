@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class FlightDaoInMemory extends FlightDao {
 
     private static final AtomicLong ID_GENERATOR = new AtomicLong();
-    private final Map<Long, FlightEntity> flights = new HashMap<>();
+    public static final Map<Long, FlightEntity> flights = new HashMap<>();
 
     public FlightDaoInMemory() {
         addFlight("Kiev", "Baku", 3, 5);

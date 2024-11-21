@@ -7,7 +7,7 @@ import java.util.*;
 
 public class BookingDaoInMemory extends BookingDao {
 
-    private static final Map<Long, BookingEntity> BOOKINGS = new HashMap<>();
+    public static final Map<Long, BookingEntity> BOOKINGS = new HashMap<>();
 
     @Override
     public BookingEntity create(BookingEntity bookingEntity) {

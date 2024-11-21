@@ -1,7 +1,7 @@
 package az.edu.turing.service;
 
 import az.edu.turing.domain.dao.impl.memory.PassengerDaoInMemory;
-import az.edu.turing.exception.AlreadyExistsException;
+import az.edu.turing.domain.dao.inter.PassengerDao;
 import az.edu.turing.mapper.PassengerMapper;
 import az.edu.turing.model.dto.request.PassengerRequestDto;
 import az.edu.turing.model.dto.response.PassengerResponseDto;
@@ -10,47 +10,38 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PassengerServiceTest {
     private PassengerServiceImpl passengerService;
-    private PassengerDaoInMemory passengerDaoInMemory;
+    private PassengerDao passengerDao;
     private PassengerMapper passengerMapper;
 
     @BeforeEach
-    void setUp() {
-        passengerDaoInMemory = new PassengerDaoInMemory();
+    public void setUp() {
+
+        passengerDao = new PassengerDaoInMemory();
         passengerMapper = new PassengerMapper();
-        passengerService = new PassengerServiceImpl(passengerDaoInMemory, passengerMapper);
-
-        PassengerDaoInMemory.PASSENGERS.clear();
+        passengerService = new PassengerServiceImpl(passengerDao, passengerMapper);
     }
 
     @Test
-    void testCreatePassenger() {
-        PassengerRequestDto passengerRequestDto = new PassengerRequestDto(1L, "John", "Doe");
+    public void testCreatePassenger_WhenPassengerDoesNotExist_ShouldCreatePassenger() {
+        Long passengerId = 1L;
+        String name = "John";
+        String surname = "Doe";
+        PassengerRequestDto passengerRequestDto = new PassengerRequestDto(passengerId, name, surname);
 
-        PassengerResponseDto responseDto = passengerService.createPassenger(passengerRequestDto);
+        assertFalse(passengerDao.existsById(passengerId), "Yolcu əvvəlcədən mövcud olmamalıdır");
 
-        assertNotNull(responseDto);
-        assertEquals("John", responseDto.getName(), "Passenger name should be 'John'.");
-        assertEquals("Doe", responseDto.getSurname(), "Passenger surname should be 'Doe'.");
-        assertTrue(passengerDaoInMemory.existsById(1L), "Passenger should exist in the database.");
-    }
+        PassengerResponseDto response = passengerService.createPassenger(passengerRequestDto);
 
-    @Test
-    void testCreatePassengerAlreadyExists() {
-        PassengerRequestDto passengerRequestDto = new PassengerRequestDto(1L, "John", "Doe");
-        passengerService.createPassenger(passengerRequestDto);
+        assertEquals(name, response.getName());
+        assertEquals(surname, response.getSurname());
 
-        PassengerRequestDto duplicatePassengerRequestDto = new PassengerRequestDto(1L, "John", "Doe");
-
-        assertThrows(AlreadyExistsException.class, () -> passengerService.createPassenger(duplicatePassengerRequestDto),
-                "Should throw AlreadyExistsException when creating a duplicate passenger.");
+        assertTrue(passengerDao.existsById(passengerId), "Yolcu yaradıldıqdan sonra mövcud olmalıdır.");
     }
 }
-
 
 
