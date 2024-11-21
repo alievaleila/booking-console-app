@@ -59,14 +59,6 @@ public class BookingEntity implements Serializable {
         isActive = active;
     }
 
-    public static long getIdCounter() {
-        return idCounter;
-    }
-
-    public static void setIdCounter(long idCounter) {
-        BookingEntity.idCounter = idCounter;
-    }
-
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;
@@ -82,11 +74,7 @@ public class BookingEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "BookingEntity{" +
-                "id=" + id +
-                ", flight=" + flight +
-                ", passengers=" + passengers +
-                ", isActive=" + isActive +
-                '}';
+        return String.format("BookingEntity{id=%d, flight=%s, passengers=%s, isActive=%b}",
+                id, flight, passengers, isActive);
     }
 }

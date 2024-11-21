@@ -53,7 +53,7 @@ public class Menu {
             switch (menu) {
                 case 1:
 
-                    System.out.println("ID - DEPARTURPOİNT - DESTİNATİONPOİNT - FLIGHTNUMBER - DEPARTURTIME - TOTALSEATS - AVAILABLESEATS");
+                    System.out.println("ID - DEPARTUREPOİNT - DESTİNATİONPOİNT - FLIGHTNUMBER - DEPARTURETIME - TOTALSEATS - AVAILABLESEATS");
                     List<FlightResponse> flightResponses = (List<FlightResponse>) flightController.getAll();
                     if (flightResponses.isEmpty()) {
                         System.out.println("There is not flight!");

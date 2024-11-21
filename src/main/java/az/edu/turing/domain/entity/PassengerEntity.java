@@ -71,7 +71,6 @@ public class PassengerEntity implements Serializable {
         return Objects.hash(id, name, surname);
     }
 
-
     @Override
     public String toString() {
         return String.format("PassengerEntity{id='%s', name='%s', surname='%s'}", id, name, surname);

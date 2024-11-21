@@ -107,7 +107,9 @@ public class FlightEntity implements Serializable {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         FlightEntity that = (FlightEntity) object;
-        return Objects.equals(id, that.id) && Objects.equals(departurePoint, that.departurePoint) && Objects.equals(destinationPoint, that.destinationPoint) && Objects.equals(departureTime, that.departureTime);
+        return Objects.equals(id, that.id) && Objects.equals(departurePoint, that.departurePoint)
+                && Objects.equals(destinationPoint, that.destinationPoint)
+                && Objects.equals(departureTime, that.departureTime);
     }
 
     @Override
@@ -118,7 +120,8 @@ public class FlightEntity implements Serializable {
     @Override
     public String toString() {
         return String.format(
-                "FlightEntity{id='%s', departurePoint='%s', destinationPoint='%s', departureTime=%s, totalSeats=%d, availableSeats=%d}",
+                "FlightEntity{id='%s', departurePoint='%s', destinationPoint='%s', departureTime=%s, totalSeats=%d," +
+                        " availableSeats=%d}",
                 id, departurePoint, destinationPoint, departureTime, totalSeats, availableSeats
         );
     }
